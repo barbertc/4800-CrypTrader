@@ -64,5 +64,5 @@ fn main() {
     let output = Command::new("krak").args(arguments).output().unwrap();
     let stdout = String::from_utf8_lossy(&output.stdout);
     println!("{}", stdout);
-    fs::write("./out.json", stdout).expect("Unable to write file");
+    //fs::write("./out.json", stdout).expect("Unable to write file");
 }
