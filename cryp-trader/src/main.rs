@@ -61,20 +61,13 @@ fn main() {
     }
 
     println!("{:?}", arguments);
-<<<<<<< HEAD
-    let output = Command::new("krak").args(arguments).output().unwrap();
+    let output = Command::new("krak").args(arguments.clone()).output().unwrap();
     let stdout = String::from_utf8_lossy(&output.stdout);
     println!("{}", stdout);
     //fs::write("./out.json", stdout).expect("Unable to write file");
-=======
-    let output = Command::new("krak")
-						.args(arguments)
-						.stdout(Stdio::piped())
-						.output()
-						.expect("failed to execute krak command");
+    let output = Command::new("krak").args(arguments).stdout(Stdio::piped()).output().expect("failed to execute krak command");
     let stdout = String::from_utf8_lossy(&output.stderr);
     //println!("{:?}", output);
 	println!("{}", stdout);
     fs::write("./out.json", stdout.to_string()).expect("Unable to write file");
->>>>>>> 0edc55fce7f694d92d18d1f2b9bf839f8c98b5c9
 }
