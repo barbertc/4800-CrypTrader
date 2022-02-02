@@ -1,14 +1,11 @@
-use std::process::{Command, Stdio};
 use std::env;
 use std::path::Path;
 use std::fs;
 use krakenrs::{BsType, KrakenCredentials, KrakenRestAPI, KrakenRestConfig, LimitOrder, MarketOrder, OrderFlag};
-use log::Level;
-use serde::Serialize;
-use std::{collections::{BTreeMap, BTreeSet},io::Write,path::PathBuf};
+//use std::{collections::{BTreeMap, BTreeSet},io::Write,path::PathBuf};
 use std::fs::File;
 extern crate serde_json;
-#[macro_use] extern crate serde_derive;
+extern crate serde_derive;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -67,8 +64,8 @@ fn main() {
 
     krc.creds = credentials;
     
-    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");
-    let result = api.get_account_balance().expect("api call failed");
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api"); /* API creation */
+    let result = api.get_account_balance().expect("api call failed"); /* connects to external kraken wallet */
 
     let ofile = match File::create("account_balance.json") {
         Ok(res) => res,
