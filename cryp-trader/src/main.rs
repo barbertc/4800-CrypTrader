@@ -6,6 +6,10 @@ use krakenrs::{BsType, KrakenCredentials, KrakenRestAPI, KrakenRestConfig, Limit
 use log::Level;
 use serde::Serialize;
 use std::{collections::{BTreeMap, BTreeSet},io::Write,path::PathBuf};
+use std::fs::File;
+extern crate serde_json;
+#[macro_use] extern crate serde_derive;
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     let mut arguments = Vec::<String>::new();
@@ -49,6 +53,7 @@ fn main() {
         println!("File: {} does not exist", creds_path_input);
         return;
     }
+    
     println!("Found your path at: {}", creds_path_input);
     let mut krc = krakenrs::KrakenRestConfig::default();
 
@@ -59,14 +64,28 @@ fn main() {
             return;
         }
     };
-    let pairs = Vec::from("BTCUSD".to_string());
+
     krc.creds = credentials;
+    
     let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");
-    let result = api.ticker(pairs).expect("api call failed");
-    let sorted_result = result.into_iter().collect::<BTreeMap<_, _>>();
-  
+    let result = api.get_account_balance().expect("api call failed");
 
+    let ofile = match File::create("account_balance.json") {
+        Ok(res) => res,
+        Err(e) => {
+            println!("error writing json, {}", e);
+            return;
+        }
+    };
 
+    match serde_json::to_writer(ofile, &result) {
+        Ok(res) => res,
+        Err(e) => {
+            println!("error writing json, {}", e);
+            return;
+        }
+    };
+    
 }
 
 

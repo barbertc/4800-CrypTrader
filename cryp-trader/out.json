@@ -1,9 +1,0 @@
-error: The subcommand 'balance' wasn't recognized
-	Did you mean 'get-balance'?
-
-If you believe you received this message in error, try re-running with 'krak -- balance'
-
-USAGE:
-    krak [FLAGS] [creds] <SUBCOMMAND>
-
-For more information try --help

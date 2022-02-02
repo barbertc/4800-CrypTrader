@@ -309,6 +309,8 @@ dependencies = [
  "log",
  "rocket",
  "serde",
+ "serde_derive",
+ "serde_json",
 ]
 
 [[package]]
