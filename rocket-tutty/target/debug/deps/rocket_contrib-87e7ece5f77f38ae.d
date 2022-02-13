@@ -1,0 +1,11 @@
+/home/calebb/capstone/rocket-tutty/target/debug/deps/rocket_contrib-87e7ece5f77f38ae.rmeta: /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/lib.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/json.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/serve.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/uuid.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/helmet/mod.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/helmet/helmet.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/helmet/policy.rs
+
+/home/calebb/capstone/rocket-tutty/target/debug/deps/rocket_contrib-87e7ece5f77f38ae.d: /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/lib.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/json.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/serve.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/uuid.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/helmet/mod.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/helmet/helmet.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/helmet/policy.rs
+
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/lib.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/json.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/serve.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/uuid.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/helmet/mod.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/helmet/helmet.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/rocket_contrib-0.4.10/src/helmet/policy.rs:

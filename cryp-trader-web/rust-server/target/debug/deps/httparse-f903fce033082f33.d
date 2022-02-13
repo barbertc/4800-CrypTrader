@@ -1,0 +1,12 @@
+/home/calebb/capstone/cryp-trader-web/rust-server/target/debug/deps/httparse-f903fce033082f33.rmeta: /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/lib.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/iter.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/macros.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/mod.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/sse42.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/avx2.rs
+
+/home/calebb/capstone/cryp-trader-web/rust-server/target/debug/deps/libhttparse-f903fce033082f33.rlib: /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/lib.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/iter.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/macros.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/mod.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/sse42.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/avx2.rs
+
+/home/calebb/capstone/cryp-trader-web/rust-server/target/debug/deps/httparse-f903fce033082f33.d: /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/lib.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/iter.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/macros.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/mod.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/sse42.rs /home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/avx2.rs
+
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/lib.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/iter.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/macros.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/mod.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/sse42.rs:
+/home/calebb/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.6.0/src/simd/avx2.rs:
