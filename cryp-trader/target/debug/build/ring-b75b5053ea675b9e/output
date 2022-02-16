@@ -1,0 +1,3 @@
+cargo:rustc-link-lib=static=ring-core
+cargo:rustc-link-lib=static=ring-test
+cargo:rustc-link-search=native=/mnt/c/VSCODE/4800-CrypTrader/cryp-trader/target/debug/build/ring-b75b5053ea675b9e/out
