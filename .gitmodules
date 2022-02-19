@@ -1,0 +1,3 @@
+[submodule "wasm-pack-template"]
+	path = wasm-pack-template
+	url = https://github.com/rustwasm/wasm-pack-template
