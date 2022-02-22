@@ -92,9 +92,9 @@ fn app() -> Html {
 
     html! {
         <>
-            <h1>{ "RustConf Explorer" }</h1>
+            <h1>{ "Cryp Traderz" }</h1>
             <div>
-                <h3>{"Videos to watch"}</h3>
+                <h3>{"Automated Crypto Gains"}</h3>
                 <VideosList videos={videos} />
                 <VideosList videos={videos} on_click={on_video_select.clone()} />
             </div>
