@@ -14,8 +14,8 @@ function App() {
   return (
     // I cut out the fluff
     <div className="App" >
-      <div>Sum Results: {sum}</div>
-      <div>Fib Results: {fib}</div>
+      {/* <div>Sum Results: {sum}</div>
+      <div>Fib Results: {fib}</div> */}
     </div>
   );
 }
