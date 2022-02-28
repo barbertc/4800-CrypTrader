@@ -74,7 +74,7 @@ HOST_CFLAGS = None
 CFLAGS = None
 CRATE_CC_NO_DEFAULTS = None
 DEBUG = Some("true")
-CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+CARGO_CFG_TARGET_FEATURE = Some("fxsr,llvm14-builtins-abi,sse,sse2")
 running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/include" "-Wall" "-Wextra" "-E" "build/expando.c"
 exit status: 0
 cargo:rustc-cfg=osslconf="OPENSSL_NO_SSL3_METHOD"
