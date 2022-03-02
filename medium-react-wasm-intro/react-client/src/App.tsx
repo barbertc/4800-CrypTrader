@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  import('wasm').then(({ add_two_ints, fib }) => {
+  import('wasm').then(({ add_two_ints, fib, ticker }) => {
     const sumResult = add_two_ints(10, 20);
     const fibResult = fib(10);
+    const tickerResult = ticker("BTCUSD");
     setSum(sumResult);
     setFib(fibResult);
   })
@@ -14,8 +15,8 @@ function App() {
   return (
     // I cut out the fluff
     <div className="App" >
-      {/* <div>Sum Results: {sum}</div>
-      <div>Fib Results: {fib}</div> */}
+      <div>Sum Results: {sum}</div>
+      <div>Fib Results: {fib}</div>
     </div>
   );
 }

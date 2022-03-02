@@ -18,7 +18,7 @@ class Wallet {
 }
 
 const Title = () => {
-  return <h1>Peter's Efficient Excnange Network</h1>
+  return <h1>Peter's Efficient Exchange Network</h1>
 }
 
 const About = () => {
