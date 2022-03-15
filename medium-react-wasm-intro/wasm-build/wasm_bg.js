@@ -18,4 +18,3 @@ export function fib(n) {
     var ret = wasm.fib(n);
     return ret;
 }
-

@@ -1,5 +1,6 @@
 //extern crate krakenrs;
 use std::fs::File;
+use std::path::Path;
 extern crate serde_json;
 extern crate serde_derive;
 use wasm_bindgen::prelude::*;
@@ -20,32 +21,84 @@ pub fn fib(n: i32) -> i32 {
 }
 
 #[wasm_bindgen]
-pub fn ticker(s: String) -> String {
+pub extern fn ticker(s: String){
     
-    let coin: String = s.to_string();
+    // let creds_path = Path::new("creds.json"); 
     
-    // ------------------------------------- Kraken Initialization ----------------------------------- \\
-    let mut krc = krakenrs::KrakenRestConfig::default();
-    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api"); /* API creation */
-    let result = api.ticker(vec![coin]).expect("api call failed"); /* connects to external kraken wallet */
-    // ------------------------------------- Kraken Initialization ----------------------------------- \\
+    // let coin: String = s.to_string();
+    
+    // let credentials = match krakenrs::KrakenCredentials::load_json_file(creds_path) {  // loads credentials json file into kraken REST API object
+    //     Ok(res) => res,
+    //     Err(e) => {
+    //         println!("error loading creds, {}", e);
+    //         return "error".to_string();
+    //     }
+    // };
     
 
-    // --------------------------------------- File Writing Out -------------------------------------- \\
-    let ofile = match File::create("ticker.json") {
-        Ok(res) => res,
-        Err(e) => {
-            println!("error writing json, {}", e);
-            return result;
-        }
-    };
-    match serde_json::to_writer(ofile, &result) {
-        Ok(res) => res, 
-        Err(e) => {
-            println!("error writing json, {}", e);
-            return result;
-        }
-    };
-    // --------------------------------------- File Writing Out --------------------------------------- \\
-    return result;
+    // // ------------------------------------- Kraken Initialization ----------------------------------- \\
+    // let mut krc = krakenrs::KrakenRestConfig::default();
+    // krc.creds = credentials;
+    // let api = krakenrs::try_from(krc).expect("could not create kraken api"); /* API creation */
+    // let result = api.ticker(vec![coin]).expect("api call failed"); /* connects to external kraken wallet */
+    // // ------------------------------------- Kraken Initialization ----------------------------------- \\
+    
+
+    // // --------------------------------------- File Writing Out -------------------------------------- \\
+    // let ofile = match File::create("ticker.json") {
+    //     Ok(res) => res,
+    //     Err(e) => {
+    //         println!("error writing json, {}", e);
+    //         return result;
+    //     }
+    // };
+    // match serde_json::to_writer(ofile, &result) {
+    //     Ok(res) => res, 
+    //     Err(e) => {
+    //         println!("error writing json, {}", e);
+    //         return result;
+    //     }
+    // };
+    // // --------------------------------------- File Writing Out --------------------------------------- \\
+    // return result;
+    
+    // let creds_path = Path::new("creds.json"); 
+    
+    // let coin: String = s.to_string();
+    
+    // let credentials = match krakenrs::KrakenCredentials::load_json_file(creds_path) {  // loads credentials json file into kraken REST API object
+    //     Ok(res) => res,
+    //     Err(e) => {
+    //         println!("error loading creds, {}", e);
+    //         return "error".to_string();
+    //     }
+    // };
+    
+
+    // // ------------------------------------- Kraken Initialization ----------------------------------- \\
+    // let mut krc = krakenrs::KrakenRestConfig::default();
+    // krc.creds = credentials;
+    // let api = krakenrs::try_from(krc).expect("could not create kraken api"); /* API creation */
+    // let result = api.ticker(vec![coin]).expect("api call failed"); /* connects to external kraken wallet */
+    // // ------------------------------------- Kraken Initialization ----------------------------------- \\
+    
+
+    // // --------------------------------------- File Writing Out -------------------------------------- \\
+    // let ofile = match File::create("ticker.json") {
+    //     Ok(res) => res,
+    //     Err(e) => {
+    //         println!("error writing json, {}", e);
+    //         return result;
+    //     }
+    // };
+    // match serde_json::to_writer(ofile, &result) {
+    //     Ok(res) => res, 
+    //     Err(e) => {
+    //         println!("error writing json, {}", e);
+    //         return result;
+    //     }
+    // };
+    // // --------------------------------------- File Writing Out --------------------------------------- \\
+    // return result;
+    
 }

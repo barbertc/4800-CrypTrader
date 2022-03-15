@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  import('wasm').then(({ add_two_ints, fib, ticker }) => {
+  import('wasm').then(({ add_two_ints, fib }) => {
     const sumResult = add_two_ints(10, 20);
     const fibResult = fib(10);
-    const tickerResult = ticker("BTCUSD");
+    // const tickerResult = ticker("BTCUSD");
     setSum(sumResult);
     setFib(fibResult);
   })
