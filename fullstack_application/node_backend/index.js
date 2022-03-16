@@ -12,15 +12,24 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+const db = require('./config/keys').mongoURI
+mongoose.connect(db, { useNewUrlParser: true })
+        .then(() => console.log('MongoDB successfully connected'))
+        .catch(err => console.log(err))
 
 const initializePassport = require('./passport-config.js')
 initializePassport(
     passport,
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
+    email => usersLocal.find(user => user.email === email),
+    id => usersLocal.find(user => user.id === id)
 )
 
-const users = [];
+const usersLocal = [];
+
+const users = require('./routes/api/users')
 
 // app.use(express.static(path.resolve(__dirname, '../react_client/build')));
 app.use(express.urlencoded({ extended: false }))
@@ -34,9 +43,16 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
+app.use(bodyParser.json())
+app.use("/api/users", users)
 
 app.set('views', './node_backend/views');
 app.set('view engine', 'ejs');
+
+require('./config/passport')(passport)
 
 app.get("/", checkAuthenticated, (req, res) => {
     res.render('index', { name: req.user.name })
@@ -59,7 +75,7 @@ app.get("/register", checkNotAuthenticated, (req, res) => {
 app.post("/register", checkNotAuthenticated, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        users.push({
+        usersLocal.push({
             id: Date.now().toString(),
             name: req.body.name,
             email: req.body.email,
@@ -69,7 +85,7 @@ app.post("/register", checkNotAuthenticated, async (req, res) => {
     } catch {
         res.redirect('/register');
     }
-    console.log(users);
+    console.log(usersLocal);
 });
 
 app.delete('/logout', (req, res) => {
