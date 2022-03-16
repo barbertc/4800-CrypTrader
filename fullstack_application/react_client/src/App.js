@@ -13,10 +13,10 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <footer className="App-footer">
+        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <p>{!data ? "Loading..." : data}</p>
-      </header>
+      </footer>
     </div>
   );
 }
