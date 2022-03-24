@@ -2,16 +2,24 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import Select from 'react-select'
 
 class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      coin: '',
+      coin: 'select',
       amount: '',
       gain: ''
     }
   }
+
+  options = [
+    { value: 'btcusd', label: 'Bitcoin' },
+    { value: 'ethusd', label: 'Etherium' },
+    { value: 'dot', label: 'Polkadot' },
+    { value: 'doge', label: 'Dogecoin' }
+  ]
 
   onLogoutClick = e => {
     e.preventDefault();
@@ -25,17 +33,17 @@ class Dashboard extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const buyData = {
-      coin: this.state.coin,
-      amount: this.state.amount
-    };
+    // const buyData = {
+    //   coin: this.state.coin,
+    //   amount: this.state.amount
+    // };
   };
 
   render() {
     const { user } = this.props.auth;
 
     return (
-      <div style={{ height: "50vh" }} className="container valign-wrapper">
+      <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
           <div className="landing-copy col s12 center-align">
             <h4>
@@ -56,24 +64,33 @@ class Dashboard extends Component {
             <br></br>
             <h4>
               <b>Buy Cryptocurrency</b>
+              <div className="input-field s16">
+                <Select 
+                  style={{
+                    height: '100%',
+                    fontSize: '1.2rem',
+                    border: 'none',
+                    paddingLeft: '2rem'
+                  }}
+                  options={this.options} 
+                />
+              </div>
+            </h4>
               <hr></hr>
-              {/* <form noValidate onSubmit={this.onSubmit}>
-                <div className="dropdown-content col s12">
-                  <select 
-                    value={this.state.coin} 
-                    onChange={this.onChange}
-                    id='coin'
-                    name='coin'
-                  >
-                    <option value='btcusd'>Bitcoin</option>
-                    <option value='ethusd'>Etherium</option>
-                    <option value='dot'>Polkadot</option>
-                    <option value='bootyusd'>Booty</option>
-                    <option value='idk'>I'll make more later</option>
-                  </select>
-                  <label htmlFor="coin">Coin</label>
-                </div>
-                <div className="input-field col s12">
+              <form noValidate onSubmit={this.onSubmit}>
+                {/* <div className="input-field s16">
+                  <label>
+                    Pick your favorite flavor:
+                    <select value={this.state.coin} onChange={this.onChange}>
+                      <option value="grapefruit">Grapefruit</option>
+                      <option value="lime">Lime</option>
+                      <option value="coconut">Coconut</option>
+                      <option value="mango">Mango</option>
+                    </select>
+                  </label>
+                </div> */}
+                <br></br>
+                <div className="input-field col s16">
                   <input
                     onChange={this.onChange}
                     value={this.state.amount}
@@ -82,7 +99,7 @@ class Dashboard extends Component {
                   />
                   <label htmlFor="amount">Amount in USD</label>
                 </div>
-                <div className="input-field col s12">
+                <div className="input-field col s16">
                   <input
                     onChange={this.onChange}
                     value={this.state.gain}
@@ -91,20 +108,33 @@ class Dashboard extends Component {
                   />
                   <label htmlFor="gain">Percent gain to sell</label>
                 </div>
-              </form> */}
-            </h4>
+                {/* <div className="col s12" style={{ paddingLeft: "11.250px" }}> */}
+                  <button
+                    style={{
+                      width: "150px",
+                      borderRadius: "3px",
+                      letterSpacing: "1.5px",
+                      marginTop: "1rem",
+                    }}
+                    onClick={this.onSubmit}
+                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  >
+                    Submit
+                  </button>
+                {/* </div> */}
+              </form>
             <button
               style={{
                 width: "150px",
                 borderRadius: "3px",
                 letterSpacing: "1.5px",
                 marginTop: "1rem",
-                position: "absolute",
+                position: "fixed",
                 bottom: "20px",
-                marginLeft: "-400px"
+                marginLeft: "-312px"
               }}
               onClick={this.onLogoutClick}
-              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+              className="btn btn-large waves-effect waves-light hoverable red accent-3"
             >
               Logout
             </button>
