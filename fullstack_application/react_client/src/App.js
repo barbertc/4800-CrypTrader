@@ -12,11 +12,11 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="server">
+      <footer className="server-status">
         <img src={logo} className="App-logo" alt="logo" />
         <p>{!data ? "Loading..." : data}</p>
-      </header>
+      </footer>
     </div>
   );
 }
