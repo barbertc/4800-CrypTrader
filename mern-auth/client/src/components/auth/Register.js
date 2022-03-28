@@ -13,6 +13,8 @@ class Register extends Component {
       email: "",
       password: "",
       password2: "",
+      walletKey: "",
+      walletSecret: "",
       errors: {}
     };
   }
@@ -43,7 +45,9 @@ class Register extends Component {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      password2: this.state.password2
+      password2: this.state.password2,
+      walletKey: this.state.walletKey,
+      walletSecret: this.state.walletSecret
     };
 
     this.props.registerUser(newUser, this.props.history);
@@ -124,6 +128,34 @@ class Register extends Component {
                 />
                 <label htmlFor="password2">Confirm Password</label>
                 <span className="red-text">{errors.password2}</span>
+              </div>
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.walletKey}
+                  error={errors.walletKey}
+                  id="walletKey"
+                  type="text"
+                  className={classnames("", {
+                    invalid: errors.walletKey
+                  })}
+                />
+                <label htmlFor="walletSecret">Wallet Key</label>
+                <span className="red-text">{errors.walletKey}</span>
+              </div>
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.walletSecret}
+                  error={errors.walletSecret}
+                  id="walletSecret"
+                  type="text"
+                  className={classnames("", {
+                    invalid: errors.walletSecret
+                  })}
+                />
+                <label htmlFor="walletSecret">Wallet Secret</label>
+                <span className="red-text">{errors.walletSecret}</span>
               </div>
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                 <button

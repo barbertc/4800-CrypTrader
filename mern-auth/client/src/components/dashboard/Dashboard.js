@@ -31,12 +31,7 @@ class Dashboard extends Component {
   };
 
   onSubmit = e => {
-    e.preventDefault();
-
-    // const buyData = {
-    //   coin: this.state.coin,
-    //   amount: this.state.amount
-    // };
+    
   };
 
   render() {
