@@ -12,6 +12,8 @@ class Dashboard extends Component {
       amount: '',
       gain: ''
     }
+
+    this.bought = false
   }
 
   options = [
@@ -31,8 +33,45 @@ class Dashboard extends Component {
   };
 
   onSubmit = e => {
-    
+    e.preventDefault();
+
+    /** Crypto purchase action steps
+     * Replace input display with sell progress
+     * Call rust function to buy user inputted amount
+     * Show estimated sale value based upon user inputted percentage
+     * Show realtime coin value
+     * Alert user when sale is complete
+     * Revert back to input form
+     */
   };
+
+  sellProgress = () => {
+    return (
+      <div>
+        <div className="landing-copy col s16 center-align">
+          <h5>Purchase Value</h5>
+          <br></br>
+          <p className="flow-text grey-text text-darken-1">
+              Value at purchase displayed here
+          </p>
+        </div>
+        <div className="landing-copy col s16 center-align">
+          <h5>Estimated Sale Value</h5>
+          <br></br>
+          <p className="flow-text grey-text text-darken-1">
+            Estimated return values based upon percentage gain
+          </p>
+        </div>
+        <div className="landing-copy col s16 center-align">
+          <h5>Current {this.state.coin} Value</h5>
+          <br></br>
+          <p className="flow-text grey-text text-darken-1">
+            Current coin value updated in real time
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   render() {
     const { user } = this.props.auth;
@@ -71,53 +110,43 @@ class Dashboard extends Component {
                 />
               </div>
             </h4>
-              <hr></hr>
-              <form noValidate onSubmit={this.onSubmit}>
-                {/* <div className="input-field s16">
-                  <label>
-                    Pick your favorite flavor:
-                    <select value={this.state.coin} onChange={this.onChange}>
-                      <option value="grapefruit">Grapefruit</option>
-                      <option value="lime">Lime</option>
-                      <option value="coconut">Coconut</option>
-                      <option value="mango">Mango</option>
-                    </select>
-                  </label>
-                </div> */}
-                <br></br>
-                <div className="input-field col s16">
-                  <input
-                    onChange={this.onChange}
-                    value={this.state.amount}
-                    id="amount"
-                    type="number"
-                  />
-                  <label htmlFor="amount">Amount in USD</label>
-                </div>
-                <div className="input-field col s16">
-                  <input
-                    onChange={this.onChange}
-                    value={this.state.gain}
-                    id="gain"
-                    type="number"
-                  />
-                  <label htmlFor="gain">Percent gain to sell</label>
-                </div>
-                {/* <div className="col s12" style={{ paddingLeft: "11.250px" }}> */}
-                  <button
-                    style={{
-                      width: "150px",
-                      borderRadius: "3px",
-                      letterSpacing: "1.5px",
-                      marginTop: "1rem",
-                    }}
-                    onClick={this.onSubmit}
-                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                  >
-                    Submit
-                  </button>
-                {/* </div> */}
-              </form>
+            <hr></hr>
+            <form noValidate onSubmit={this.onSubmit}>
+              <br></br>
+              <div className="input-field col s16">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.amount}
+                  id="amount"
+                  type="number"
+                />
+                <label htmlFor="amount">Amount in USD</label>
+              </div>
+              <div className="input-field col s16">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.gain}
+                  id="gain"
+                  type="number"
+                  placeholder="15"
+                />
+                <label htmlFor="gain">Percent gain to sell</label>
+              </div>
+              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                <button
+                  style={{
+                    width: "150px",
+                    borderRadius: "3px",
+                    letterSpacing: "1.5px",
+                    marginTop: "1rem",
+                  }}
+                  onClick={this.onSubmit}
+                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
             <button
               style={{
                 width: "150px",
