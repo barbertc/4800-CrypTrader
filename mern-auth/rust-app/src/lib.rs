@@ -84,7 +84,7 @@ enum Command {
 // }
 
 #[no_mangle]
-pub extern fn account_balance(creds: String, user: String) {
+pub extern fn account_balance(creds: String, _user: String) {
     
     //---------------------------------------------//
     let creds_path = Path::new(&creds);            //
@@ -134,7 +134,7 @@ pub extern fn account_balance(creds: String, user: String) {
 }
 
 #[no_mangle]
-pub extern fn get_orders(creds: String, user: String) {
+pub extern fn get_orders(creds: String, _user: String) {
     
     //---------------------------------------------//
     let creds_path = Path::new(&creds);            //
