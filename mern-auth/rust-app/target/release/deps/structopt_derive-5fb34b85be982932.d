@@ -1,0 +1,10 @@
+C:\Users\tcale\Capstone\mern-auth\rust-app\target\release\deps\structopt_derive-5fb34b85be982932.dll: C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\lib.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\attrs.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\doc_comments.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\parse.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\spanned.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\ty.rs
+
+C:\Users\tcale\Capstone\mern-auth\rust-app\target\release\deps\structopt_derive-5fb34b85be982932.d: C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\lib.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\attrs.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\doc_comments.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\parse.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\spanned.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\ty.rs
+
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\lib.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\attrs.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\doc_comments.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\parse.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\spanned.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\structopt-derive-0.4.18\src\ty.rs:

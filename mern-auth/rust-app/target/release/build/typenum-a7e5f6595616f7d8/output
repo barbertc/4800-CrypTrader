@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=C:\Users\tcale\Capstone\mern-auth\rust-app\target\release\build\typenum-a7e5f6595616f7d8\out\consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=C:\Users\tcale\Capstone\mern-auth\rust-app\target\release\build\typenum-a7e5f6595616f7d8\out\op.rs

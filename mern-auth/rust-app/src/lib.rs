@@ -3,6 +3,7 @@ use std::path::Path;
 use std::fs::File;
 extern crate serde_json;
 extern crate serde_derive;
+use std::ffi::CString;
 use core::convert::TryFrom;
 use core::fmt::Debug;
 use krakenrs::{BsType, KrakenCredentials, KrakenRestAPI, KrakenRestConfig, LimitOrder, MarketOrder, OrderFlag};
@@ -84,11 +85,11 @@ enum Command {
 // }
 
 #[no_mangle]
-pub extern fn account_balance(creds: String, _user: String) {
-    
+pub extern fn account_balance(credens: CString, _user: CString) {
+    let creds:String = credens.into_string().expect("not working");
     //---------------------------------------------//
     let creds_path = Path::new(&creds);            //
-    if !creds_path.is_file() {			   //    
+    if !creds_path.is_file() {			           //    
         println!("File: {} does not exist", creds);// 	Checks Creds File 
         return;				   //
     }						   //

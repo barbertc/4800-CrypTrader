@@ -1,0 +1,12 @@
+C:\Users\tcale\Capstone\mern-auth\rust-app\target\release\deps\httparse-d50bd09f4822f9c2.rmeta: C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\lib.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\iter.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\macros.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\mod.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\sse42.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\avx2.rs
+
+C:\Users\tcale\Capstone\mern-auth\rust-app\target\release\deps\libhttparse-d50bd09f4822f9c2.rlib: C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\lib.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\iter.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\macros.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\mod.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\sse42.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\avx2.rs
+
+C:\Users\tcale\Capstone\mern-auth\rust-app\target\release\deps\httparse-d50bd09f4822f9c2.d: C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\lib.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\iter.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\macros.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\mod.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\sse42.rs C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\avx2.rs
+
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\lib.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\iter.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\macros.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\mod.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\sse42.rs:
+C:\Users\tcale\.cargo\registry\src\github.com-1ecc6299db9ec823\httparse-1.6.0\src\simd\avx2.rs:
