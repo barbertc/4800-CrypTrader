@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import Select from 'react-select'
-import path from 'react-path'
+import path from 'path'
 import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 
