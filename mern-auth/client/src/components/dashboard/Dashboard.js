@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import Select from 'react-select'
-import path from 'path'
-import ffi from 'ffi-napi'
-import ref from 'ref-napi'
 
 
 class Dashboard extends Component {
@@ -19,12 +16,7 @@ class Dashboard extends Component {
     }
   }
 
-  voidType = ref.types.void
-  CString = ref.types.CString
-
-  rust = ffi.Library(path.join(__dirname, '../../../../rust-app/target/release/librust_app.d'), {
-    account_balance: [this.voidType, [this.CString, this.CString]]
-  })
+  // rust = ffi.Library()
 
   options = [
     { value: 'BTCUSD', label: 'BTCUSD' },
