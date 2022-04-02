@@ -1,0 +1,2 @@
+WARN rustc_metadata::locator no metadata found: incompatible metadata version found: '/home/caleb/capstone/mern-auth/rust-app/target/release/deps/libtokio_macros-860fd8588ca12b65.so'
+WARN rustc_metadata::locator no metadata found: incompatible metadata version found: '/home/caleb/capstone/mern-auth/rust-app/target/release/deps/libfutures_macro-1920a4f65158bae9.so'

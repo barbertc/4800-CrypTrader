@@ -1,0 +1,1 @@
+WARN rustc_metadata::locator no metadata found: incompatible metadata version found: '/home/caleb/capstone/mern-auth/rust-app/target/release/deps/libserde_derive-1f4e470a22042ab2.so'

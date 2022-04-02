@@ -1,0 +1,1 @@
+WARN rustc_metadata::locator no metadata found: incompatible metadata version found: '/home/caleb/capstone/mern-auth/rust-app/target/release/deps/libthiserror_impl-70d0c26e5cd9aecf.so'

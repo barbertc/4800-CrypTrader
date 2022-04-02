@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const ffi = require("ffi-napi");
 
 const users = require("./routes/api/users");
 
@@ -35,6 +36,15 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/api/users", users);
+
+const rust = ffi.Library('./rust-app/target/release/librust_app', {
+  'test_fun': ['int', ['int', 'int']],
+  'account_balance': ['void', ['string', 'string']]
+})
+
+let testFun = rust.test_fun(6, 9);
+// let accountBalance = rust.account_balance('./creds.json', 'stermonzl')
+console.log(testFun);
 
 const port = process.env.PORT || 5000;
 

@@ -130,7 +130,8 @@ pub extern fn account_balance(credens: CString, _user: CString) {
             println!("error writing json, {}", e);	    //
             return;					    //
         }						    //
-    };							    //
+    };	
+    
     //------------------------------------------------------//
 }
 
@@ -372,4 +373,9 @@ pub extern fn mk_sell(creds: String, vol: String, par: String) {
     };							    //
     //------------------------------------------------------//
     println!(" | write successful | ");
+}
+
+#[no_mangle]
+pub extern fn test_fun(n1: i32, n2: i32) -> i32 {
+    return n1 * n2;
 }

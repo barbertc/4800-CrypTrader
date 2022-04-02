@@ -1,0 +1,1 @@
+WARN rustc_metadata::locator no metadata found: incompatible metadata version found: '/home/caleb/capstone/mern-auth/rust-app/target/release/deps/libproc_macro_error_attr-effa13dc85d733a0.so'

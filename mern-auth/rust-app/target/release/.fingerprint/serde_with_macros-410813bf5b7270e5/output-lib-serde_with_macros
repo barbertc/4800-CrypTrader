@@ -1,0 +1,1 @@
+WARN rustc_metadata::locator no metadata found: incompatible metadata version found: '/home/caleb/capstone/mern-auth/rust-app/target/release/deps/libdarling_macro-181ca36ea9c2f023.so'
