@@ -3,10 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@coderwxl/ffi-napi": "^5.0.1",
     "axios": "^0.26.1",
     "classnames": "^2.2.6",
-    "ffi-napi": "^4.0.3",
     "fs": "^0.0.1-security",
     "jwt-decode": "^2.2.0",
     "node-polyfill-webpack-plugin": "^1.1.4",

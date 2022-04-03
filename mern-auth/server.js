@@ -42,9 +42,9 @@ const rust = ffi.Library('./rust-app/target/release/librust_app', {
   'account_balance': ['void', ['string', 'string']]
 })
 
-let testFun = rust.test_fun(6, 9);
-// let accountBalance = rust.account_balance('./creds.json', 'stermonzl')
-console.log(testFun);
+app.get('/api/rust-functions/test', (req, res) => {
+  res.send({ balance: rust.test_fun(6, 9) })
+})
 
 const port = process.env.PORT || 5000;
 

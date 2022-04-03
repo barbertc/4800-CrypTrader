@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import Select from 'react-select'
-
+import axios from "axios";
 
 class Dashboard extends Component {
   constructor() {
@@ -12,11 +12,10 @@ class Dashboard extends Component {
       coin: 'select',
       amount: null,
       gain: 15,
-      bought: false
+      bought: false,
+      balance: 0,
     }
   }
-
-  // rust = ffi.Library()
 
   options = [
     { value: 'BTCUSD', label: 'BTCUSD' },
@@ -24,6 +23,14 @@ class Dashboard extends Component {
     { value: 'DOT', label: 'DOT' },
     { value: 'DOGE', label: 'DOGE' }
   ]
+
+  componentDidMount() {
+    axios.get('localhost:5000/api/rust-functions/test').then(res => {
+      const test = res.data
+      console.log(test)
+      this.setState({ test })
+    }).catch(this.setState({ balance: 'API Error' }))
+  }
 
   onLogoutClick = e => {
     e.preventDefault();
@@ -42,11 +49,11 @@ class Dashboard extends Component {
     e.preventDefault();
     this.changeView();
     
-    const purchase = {
-      coin: this.state.coin,
-      amount: this.state.amount,
-      gain: this.state.gain
-    }
+    // const purchase = {
+    //   coin: this.state.coin,
+    //   amount: this.state.amount,
+    //   gain: this.state.gain
+    // }
 
     /** Crypto purchase action steps
      * Done - Replace input display with sell progress
@@ -155,7 +162,6 @@ class Dashboard extends Component {
           <h5>Current {this.state.coin} Value</h5>
           <hr></hr>
           <p className="flow-text grey-text text-darken-1">
-            Current {this.state.coin} value
           </p>
         </div>
         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
@@ -195,7 +201,7 @@ class Dashboard extends Component {
               <b>Wallet Ballance</b>
               <hr></hr>
               <p className="flow-text grey-text text-darken-1">
-                Wallet balance will be displayed here
+                {this.state.balance}
               </p>
             </h4>
             <br></br>
