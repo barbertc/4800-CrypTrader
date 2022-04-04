@@ -13,14 +13,14 @@ class Dashboard extends Component {
       amount: null,
       gain: 15,
       bought: false,
-      balance: 0,
+      balance: {},
       currentValue: null
     }
   }
 
   options = [
     { value: 'BTCUSD', label: 'BITCOIN' },
-    { value: 'XETHUSD', label: 'ETHERIUM' },
+    { value: 'XETHZUSD', label: 'ETHERIUM' },
     { value: 'DOTUSD', label: 'POLKADOT' },
     { value: 'DOGEUSD', label: 'DOGE COIN' },
     { value: 'SOLUSD', label: 'SOLANA' },
@@ -63,11 +63,11 @@ class Dashboard extends Component {
   ]
 
   componentDidMount() {
-    axios.get('/api/rust-functions/test').then(res => {
-      const test = res.data
-      console.log(test)
-      this.setState(test)
-    }).catch(this.setState({ balance: 'API Error' }));
+    axios.get('/api/rust-functions/account-balance').then(res => {
+      const accBalance = res.data
+      console.log(accBalance)
+      this.setState({ balance:  accBalance})
+    }).catch(this.setState({ balance: 'API Error' }))
 
     axios.get('/api/rust-functions/testjr').then(res => {
       const curValue = res.data
@@ -80,6 +80,17 @@ class Dashboard extends Component {
       console.log(tickerData)
       this.setState({ currentValue: tickerData })
     }).catch(this.setState({ currentValue: "API Error" }))
+  }
+
+  displayAccountBalance = data => {
+    var str = JSON.stringify(data)
+    str = str.replaceAll('"', '')
+    str = str.replace('{', '')
+    str = str.replace('}', '')
+    str = str.replaceAll(',', ', ')
+    str = str.replaceAll(':', ': ')
+
+    return str
   }
 
   onLogoutClick = e => {
@@ -144,10 +155,11 @@ class Dashboard extends Component {
           <b>Buy Cryptocurrency</b>
         </h4>
         <hr></hr>
+        <div className="input-field s20">
+          <select id="coin-name" options={this.options} onChange={this.onCoinChange}/>
+          <label htmlFor="coin-name">Select coin</label>
+        </div>
         <form noValidate onSubmit={this.onSubmit}>
-          <div className="input-field s20">
-            <Select options={this.options} onChange={this.onCoinChange}/>
-          </div>
           <br></br>
           <div className="input-field col s16">
             <input
@@ -252,7 +264,7 @@ class Dashboard extends Component {
               <b>Wallet Ballance</b>
               <hr></hr>
               <p className="flow-text grey-text text-darken-1">
-                ${this.state.balance}
+                {this.displayAccountBalance(this.state.balance)}
               </p>
             </h4>
             <br></br>

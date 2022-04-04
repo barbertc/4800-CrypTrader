@@ -1,27 +1,16 @@
-use serde_json::to_string_pretty;
-use serde_json::{Result, Value, json};
+use serde_json::json;
 use serde_json;
 use std::path::Path;
 use std::fs::File;
-//extern crate serde_json;
 extern crate serde_derive;
+use std::ffi::{CString,CStr};
 use core::convert::TryFrom;
 use core::fmt::Debug;
-use krakenrs::{BsType, KrakenCredentials, KrakenRestAPI, KrakenRestConfig, LimitOrder, MarketOrder, OrderFlag};
-use log::Level;
-use serde::Serialize;
-use std::{
-    collections::{BTreeMap, BTreeSet},
-    io::Write,
-    path::PathBuf,
-};
-extern crate colored;
+use krakenrs::{BsType, MarketOrder, LimitOrder, OrderFlag};
+use std::os::raw::c_char;
 use structopt::StructOpt;
 use displaydoc::Display;
-use colored::*;
-use serde_json::to_string;
-use std::os::raw::c_char;
-use std::ffi::{CString,CStr};
+use std::collections::BTreeSet;
 
 #[derive(StructOpt, Debug)]
 struct KrakConfig {
@@ -88,298 +77,460 @@ enum Command {
 	
 // }
 
-struct AccountBal {
-    coin1: String,
-    coin2: String,
-}
+// struct AccountBal {
+//     coin1: String,
+//     coin2: String,
+// }
 
 #[no_mangle]
-pub extern fn account_balance(credens: CString, _user: CString) -> CString {
-    let creds:String = credens.into_string().expect("not working");
-    //---------------------------------------------//
-    let creds_path = Path::new(&creds);            //
-    if !creds_path.is_file() {			           //    
-        println!("File: {} does not exist", creds);// 	Checks Creds File 
-    }						   //
-    println!("Found your path at: {}", creds);	   //
-    //---------------------------------------------//
+pub extern "C" fn account_balance(credens: *const c_char) -> CString {
+    let c_str = unsafe {
+        assert!(!credens.is_null());
 
+        CStr::from_ptr(credens)
+    };
+    let creden_C = c_str.to_str().unwrap();
+    let creds:String = creden_C.to_string();
+    let creds_path = Path::new(&creds);
+    if !creds_path.is_file() {
+        println!("File: {} does not exist", creds);
+    }
+    println!("Found your path at: {}", creds);
 
-    //--------------------------------------------------------------------------------//
-    let mut krc = krakenrs::KrakenRestConfig::default();                              //
-    let credentials = krakenrs::KrakenCredentials::load_json_file(creds_path).expect("WHY");										      //
-    krc.creds = credentials; 							      //
-    //--------------------------------------------------------------------------------//
+    let mut krc = krakenrs::KrakenRestConfig::default();
+    let credentials =  krakenrs::KrakenCredentials::load_json_file(creds_path).unwrap();                                              //
+    krc.creds = credentials;
 
-
-    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api"); // problem child!
-    
-    // This is where we make the actual call to the api to get our information.    
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");
     let result = api.get_account_balance().expect("api call failed"); 
-    // println!("{:?}",result);
-
-    let json_string = json!(result).to_string();
-    return CString::new(json_string).expect("No");
-
-    // let sorted_result = result.into_iter().collect::<BTreeMap<_, _>>();
-    // //let answer = String::from_utf8_lossy();
-    // println!("{:?}", sorted_result);
-    // if let Some(coin) = sorted_result.get("ETHUSD") {
-    //     let coin: String = coin.to_string().clone();
-    //     println!("{}", coin);
-    //     return CString::new(coin).unwrap();
-    // }
-    // else {
-    //     return CString::new("blank").unwrap();
-    // }
-    //return sorted_result;
-        // //------------------------------------------------------//
-    //                                                         //
-    // let ofile = match File::create("account_balance.json") {//
-    //     Ok(res) => res,				    //
-    //     Err(e) => {					    //
-    //         println!("error writing json, {}", e);	    //
-    //         				    //
-    //     }						    //
-    // };							    //   File Writing Portion,
-    // match serde_json::to_writer(ofile, &result) {	    
-    //     Ok(res) => res, 				    
-    //     Err(e) => {					    
-    //         println!("error writing json, {}", e);	    
-    //         				    //
-    //     }						    //
-    // };	
-    
-    // //------------------------------------------------------//
-    // //------------------------------------------------------//
-    //                                                         //
-    // let ofile = match File::create("account_balance.json") {//
-    //     Ok(res) => res,				    //
-    //     Err(e) => {					    //
-    //         println!("error writing json, {}", e);	    //
-    //         				    //
-    //     }						    //
-    // };							    //   File Writing Portion,
-    // match serde_json::to_writer(ofile, &result) {	    
-    //     Ok(res) => res, 				    
-    //     Err(e) => {					    
-    //         println!("error writing json, {}", e);	    
-    //         				    //
-    //     }						    //
-    // };	
-    
-    // //------------------------------------------------------//
+    //println!("{:?}",result);
+    //let sorted_result = result.intoiter().collect::<BTreeMap<, _>>();
+    let jso = json!(result);
+    //println!("{:?}", jso.to_string());
+    let retu = CString::new(jso.to_string()).unwrap();
+    return retu;
 }
 
 #[no_mangle]
-pub extern fn get_orders(creds: String, _user: String) {
+pub extern "C" fn get_orders(credens: *const c_char) -> CString {
     
     //---------------------------------------------//
+    let c_str = unsafe {			               //
+        assert!(!credens.is_null());	       	   //
+        CStr::from_ptr(credens)		               //
+    };						                       //
+    let creden_c = c_str.to_str().unwrap();	       //	turns cstring input into Rust path &
+    let creds:String = creden_c.to_string();       // 	Checks Creds File 
     let creds_path = Path::new(&creds);            //
-    if !creds_path.is_file() {			   //    
-        println!("File: {} does not exist", creds);// 	Checks Creds File 
-        return;				   //
-    }						   //
-    println!("Found your path at: {}", creds);	   //
+    if !creds_path.is_file() {			           //      
+        println!("File: {} does not exist", creds);//
+        return CString::new("FAIL").unwrap();	   //
+    }						                       //
     //---------------------------------------------//
 
 
     //--------------------------------------------------------------------------------//
     let mut krc = krakenrs::KrakenRestConfig::default();                              //
     let credentials = match krakenrs::KrakenCredentials::load_json_file(creds_path) { //  
-        Ok(res) => res,							      //
-        Err(e) => {								      //
-            println!("error loading creds, {}", e);				      //   Creates KrakenRestAPI object 
-            return;								      //   and loads the creds into it
-        }									      //
-    };										      //
-    krc.creds = credentials; 							      //
+        Ok(res) => res,							                                      //
+        Err(e) => {								                                      //
+            println!("error loading creds, {}", e);				                      //   Creates KrakenRestAPI object 
+            return CString::new("FAIL").unwrap();				                      //   and loads the creds into it
+        }									                                          //
+    };										                                          //
+    krc.creds = credentials; 							                              //
     //--------------------------------------------------------------------------------//
 
-
-    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api"); // problem child!
-    
-    // This is where we make the actual call to the api to get our information.    
-    let result = api.get_open_orders(None).expect("api call failed"); 
-    println!("{:?}",result);
-    //------------------------------------------------------//
-                                                            //
-    let ofile = match File::create("open_orders.json") {//
-        Ok(res) => res,				    //
-        Err(e) => {					    //
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };							    //   File Writing Portion,
-    match serde_json::to_writer(ofile, &result) {	    //   creates account balance.json and 
-        Ok(res) => res, 				    //   uses to_writer to write it out 
-        Err(e) => {					    //   as a nice json format
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };							    //
-    //------------------------------------------------------//
+    //-------------------------------------------------------------------------------------//
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");//
+    let result = api.get_open_orders(None).expect("api call failed"); 		           	   //	Creates api object, captures output to result,
+    let jso = json!(result).to_string();					                          	   //	turns it into json and then returns it out as 
+    return CString::new(jso).unwrap();							                           //	CString
+    //-------------------------------------------------------------------------------------//
 }
 
 #[no_mangle]
 pub extern "C" fn ticker(coin: *const c_char) -> CString {
-    let c_str = unsafe {
-        assert!(!coin.is_null());
+    //----------------------------------//
+    let c_str = unsafe {        //
+        assert!(!coin.is_null());    //
+        CStr::from_ptr(coin)        //    turns CString input into Rust String
+    };                    //    for Kraken ticker call.
+    let coiin = c_str.to_str().unwrap();//
+    //----------------------------------//
 
-        CStr::from_ptr(coin)
-    };
-    let coiin = c_str.to_str().unwrap();
-
-    //--------------------------------------------------------------------------------//
-    let mut krc = krakenrs::KrakenRestConfig::default();
-    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api"); // problem child!
-    //let coiin:String = coin.into_string().unwrap();
-    // This is where we make the actual call to the api to get our information.
-    let result = api.ticker(vec![coiin.to_string()]).expect("api call failed");
-    let jso = json!(result).to_string();
-    //println!("{:?}", jso);
-    let json_string = CString::new(jso).unwrap();
-    return json_string;
+    //-------------------------------------------------------------------------------------//
+    let krc = krakenrs::KrakenRestConfig::default();                               //
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");//    creates kraken api object and makes ticker call
+    let result = api.ticker(vec![coiin.to_string()]).expect("api call failed");       //    saving output and turning it into json to then 
+    let jso = json!(result).to_string();                           //    return it as a CString
+    
+    return CString::new(jso).unwrap();                               //
+    //-------------------------------------------------------------------------------------//
 }
 
 #[no_mangle]
-pub extern fn mk_buy(creds: String, vol: String, par: String) {
-    
-    //---------------------------------------------//
-    let creds_path = Path::new(&creds);            //
-    if !creds_path.is_file() {			   //    
-        println!("File: {} does not exist", creds);// 	Checks Creds File 
-        return;				   //
-    }						   //
-    //println!(" | Found your path at: {} | ", creds.clone());	   //
-    //---------------------------------------------//
-    let come_on = Command::MarketBuy {volume: vol.clone(), pair: par.clone()};
-    let mut config = KrakConfig{
-    	command: come_on,
-    	creds: creds.clone(),
-    	validate: false,
-    };
+pub extern "C" fn cancel_order(credens: *const c_char, idd: *const c_char) -> CString {
 
-    //let b = par.clone();
-    println!(" | {:?}",config);
-    //config.validate = true;
-    //config.creds = creds;
+    //---------------------------------------------//
+    let c_str = unsafe {                           //
+        assert!(!credens.is_null());                  //
+        CStr::from_ptr(credens)                       //
+    };                                               //
+    let creden_c = c_str.to_str().unwrap();           //    turns cstring input into Rust path &
+    let creds:String = creden_c.to_string();       //     Checks Creds File 
+    let creds_path = Path::new(&creds);            //
+    if !creds_path.is_file() {                       //
+        println!("File: {} does not exist", creds);//
+        return CString::new("FAIL").unwrap();       //
+    }                                               //
+    //---------------------------------------------//
+
+    //----------------------------------//
+    let c_str = unsafe {                //
+        assert!(!idd.is_null());        //
+        CStr::from_ptr(idd)                //
+    };                                    //
+    let id = c_str.to_str().unwrap();   //
+    //----------------------------------//
+
+    //-------------------------------------------------------------------------------------//
+    let mut krc = krakenrs::KrakenRestConfig::default();                                   //
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");//    creates kraken api object and makes ticker call
+    let result = api.cancel_order(id.to_string()).expect("api call failed");               //    saving output and turning it into json to then 
+    let jso = json!(result).to_string();                                                   //    return it as a CString
+    return CString::new(jso).unwrap();                                                       //
+    //-------------------------------------------------------------------------------------//
+}
+
+#[no_mangle]
+pub extern "C" fn cancel_all_orders(credens: *const c_char) -> CString {
+
+    //---------------------------------------------//
+    let c_str = unsafe {                           //
+        assert!(!credens.is_null());                  //
+        CStr::from_ptr(credens)                       //
+    };                                               //
+    let creden_c = c_str.to_str().unwrap();           //    turns cstring input into Rust path &
+    let creds:String = creden_c.to_string();       //     Checks Creds File 
+    let creds_path = Path::new(&creds);            //
+    if !creds_path.is_file() {                       //
+        println!("File: {} does not exist", creds);//
+        return CString::new("FAIL").unwrap();       //
+    }                                               //
+    //---------------------------------------------//
+
+    //-------------------------------------------------------------------------------------//
+    let mut krc = krakenrs::KrakenRestConfig::default();                                   //
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");//    creates kraken api object and makes ticker call
+    let result = api.cancel_all_orders().expect("api call failed");               //    saving output and turning it into json to then 
+    let jso = json!(result).to_string();                                                   //    return it as a CString
+    return CString::new(jso).unwrap();                                                       //
+    //-------------------------------------------------------------------------------------//
+}
+
+#[no_mangle]
+pub extern "C" fn mk_buy(credens: *const c_char, voll: *const c_char, parr: *const c_char) -> CString {
     
-    //println!("config.validate");
+    //---------------------------------------------//
+    let c_str1 = unsafe {		           //
+        assert!(!voll.is_null());	           //
+        CStr::from_ptr(voll)		           //	turns CString input into Rust String
+    };					           //	for volume selection.
+    let vol = c_str1.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+    
+    //---------------------------------------------//
+    let c_str2 = unsafe {		           //
+        assert!(!parr.is_null());	           //
+        CStr::from_ptr(parr)		           //	turns CString input into Rust String
+    };					           //	for coin selection.
+    let par = c_str2.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+    
+    //---------------------------------------------//
+    let c_str = unsafe {			   //
+        assert!(!credens.is_null());		   //
+        CStr::from_ptr(credens)		   //
+    };						   //
+    let creden_c = c_str.to_str().unwrap();	   //	turns cstring input into Rust path &
+    let creds:String = creden_c.to_string();       // 	Checks Creds File 
+    let creds_path = Path::new(&creds);            //
+    if !creds_path.is_file() {			   //      
+        println!("File: {} does not exist", creds);//
+        return CString::new("FAIL").unwrap();	   //
+    }						   //
+    //---------------------------------------------//
+    
+    //------------------------------------------------------------------------//
+    let come_on = Command::MarketBuy {volume: vol.clone(), pair: par.clone()};//
+    let mut config = KrakConfig{					      //
+    	command: come_on,						      //  This creates an order to then pass to add_market_order
+    	creds: creds.clone(),						      //
+    	validate: false,						      //
+    };									      //
+    //------------------------------------------------------------------------//
+	
     //--------------------------------------------------------------------------------//
     let mut krc = krakenrs::KrakenRestConfig::default();                              //
     let credentials = match krakenrs::KrakenCredentials::load_json_file(creds_path) { //  
         Ok(res) => res,							      //
         Err(e) => {								      //
             println!("error loading creds, {}", e);				      //   Creates KrakenRestAPI object 
-            return;								      //   and loads the creds into it
+            return CString::new("FAIL").unwrap();				      //   and loads the creds into it
         }									      //
     };										      //
     krc.creds = credentials; 							      //
     //--------------------------------------------------------------------------------//
-    println!(" | loaded credentials | ");
 
-    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api"); // problem child!
-    println!(" | api loaded | ");
-    // This is where we make the actual call to the api to get our information.    
-    let result = api.add_market_order(MarketOrder {
-    						bs_type: BsType::Buy,
-                        			volume: vol,
-                        			pair: par,
-                        			oflags: Default::default(),
-                    				},
-                    			None,
-                    			config.validate,
-    					).expect(&"api call failed");
-    println!(" | sale successful | ");
-    //------------------------------------------------------//
-                                                            //
-    let ofile = match File::create("buy.json") {//
-        Ok(res) => res,				    //
-        Err(e) => {					    //
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };							    //   File Writing Portion,
-    match serde_json::to_writer(ofile, &result) {	    //   creates account balance.json and 
-        Ok(res) => res, 				    //   uses to_writer to write it out 
-        Err(e) => {					    //   as a nice json format
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };							    //
-    //------------------------------------------------------//
-    println!(" | write successful | ");
+    
+    //-------------------------------------------------------------------------------------//
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");// 
+    let result = api.add_market_order(MarketOrder {					   //
+    						bs_type: BsType::Buy,			   //
+                        			volume: vol,				   //
+                        			pair: par,				   //
+                        			oflags: Default::default(),		   //	calls add_market_order and adds our order that we created earlier
+                    				},					   //	turns result into a json and then  
+                    			None,						   //	returns it as a CString
+                    			config.validate,				   //
+    					).expect(&"api call failed");			   //
+    let jso = json!(result).to_string();						   //	
+    return CString::new(jso).unwrap();							   //
+    //-------------------------------------------------------------------------------------//
 }
 
 #[no_mangle]
-pub extern fn mk_sell(creds: String, vol: String, par: String) {
+pub extern "C" fn mk_sell(credens: *const c_char, voll: *const c_char, parr: *const c_char) -> CString {
     
     //---------------------------------------------//
+    let c_str1 = unsafe {		           //
+        assert!(!voll.is_null());	           //
+        CStr::from_ptr(voll)		           //	turns CString input into Rust String
+    };					           //	for volume selection.
+    let vol = c_str1.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+    
+    //---------------------------------------------//
+    let c_str2 = unsafe {		           //
+        assert!(!parr.is_null());	           //
+        CStr::from_ptr(parr)		           //	turns CString input into Rust String
+    };					           //	for coin selection.
+    let par = c_str2.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+    
+    //---------------------------------------------//
+    let c_str = unsafe {			   //
+        assert!(!credens.is_null());		   //
+        CStr::from_ptr(credens)		   //
+    };						   //
+    let creden_c = c_str.to_str().unwrap();	   //	turns cstring input into Rust path &
+    let creds:String = creden_c.to_string();       // 	Checks Creds File 
     let creds_path = Path::new(&creds);            //
-    if !creds_path.is_file() {			   //    
-        println!("File: {} does not exist", creds);// 	Checks Creds File 
-        return;				   //
+    if !creds_path.is_file() {			   //      
+        println!("File: {} does not exist", creds);//
+        return CString::new("FAIL").unwrap();	   //
     }						   //
-    //println!(" | Found your path at: {} | ", creds.clone());	   //
     //---------------------------------------------//
-    let come_on = Command::MarketSell {volume: vol.clone(), pair: par.clone()};
-    let mut config = KrakConfig{
-    	command: come_on,
-    	creds: creds.clone(),
-    	validate: false,
-    };
-
-    //let b = par.clone();
-    println!(" | {:?}",config);
-    //config.validate = true;
-    //config.creds = creds;
     
-    //println!("config.validate");
+    //------------------------------------------------------------------------//
+    let come_on = Command::MarketSell {volume: vol.clone(), pair: par.clone()};//
+    let mut config = KrakConfig{					      //
+    	command: come_on,						      //  This creates an order to then pass to add_market_order
+    	creds: creds.clone(),						      //
+    	validate: false,						      //
+    };									      //
+    //------------------------------------------------------------------------//
+	
     //--------------------------------------------------------------------------------//
     let mut krc = krakenrs::KrakenRestConfig::default();                              //
     let credentials = match krakenrs::KrakenCredentials::load_json_file(creds_path) { //  
         Ok(res) => res,							      //
         Err(e) => {								      //
             println!("error loading creds, {}", e);				      //   Creates KrakenRestAPI object 
-            return;								      //   and loads the creds into it
+            return CString::new("FAIL").unwrap();				      //   and loads the creds into it
         }									      //
     };										      //
     krc.creds = credentials; 							      //
     //--------------------------------------------------------------------------------//
-    println!(" | loaded credentials | ");
 
-    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api"); // problem child!
-    println!(" | api loaded | ");
-    // This is where we make the actual call to the api to get our information.    
-    let result = api.add_market_order(MarketOrder {
-    						bs_type: BsType::Sell,
-                        			volume: vol,
+    
+    //-------------------------------------------------------------------------------------//
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");// 
+    let result = api.add_market_order(MarketOrder {					   //
+    						bs_type: BsType::Sell,			   //
+                        			volume: vol,				   //
+                        			pair: par,				   //
+                        			oflags: Default::default(),		   //	calls add_market_order and adds our order that we created earlier
+                    				},					   //	turns result into a json and then  
+                    			None,						   //	returns it as a CString
+                    			config.validate,				   //
+    					).expect(&"api call failed");			   //
+    let jso = json!(result).to_string();						   //	
+    return CString::new(jso).unwrap();							   //
+    //-------------------------------------------------------------------------------------//
+}
+
+#[no_mangle]
+pub extern "C" fn limit_buy(credens: *const c_char, voll: *const c_char, parr: *const c_char, pricee: *const c_char) -> CString {
+    //---------------------------------------------//
+    let c_str1 = unsafe {		                   //
+        assert!(!voll.is_null());	               //
+        CStr::from_ptr(voll)		               //	turns CString input into Rust String
+    };					                           //	for volume selection.
+    let vol = c_str1.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+    
+    //---------------------------------------------//
+    let c_str2 = unsafe {		                   //
+        assert!(!parr.is_null());	               //
+        CStr::from_ptr(parr)		               //	turns CString input into Rust String
+    };					                           //	for coin selection.
+    let par = c_str2.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+
+    //---------------------------------------------//
+    let c_str3 = unsafe {		                   //
+        assert!(!pricee.is_null());	               //
+        CStr::from_ptr(pricee)		               //	turns CString input into Rust String
+    };					                           //	for coin selection.
+    let pryce = c_str2.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+    
+    //---------------------------------------------//
+    let c_str = unsafe {			               //
+        assert!(!credens.is_null());	    	   //
+        CStr::from_ptr(credens)		               //
+    };						                       //
+    let creden_c = c_str.to_str().unwrap();	       //	turns cstring input into Rust path &
+    let creds:String = creden_c.to_string();       // 	Checks Creds File 
+    let creds_path = Path::new(&creds);            //
+    if !creds_path.is_file() {			           //      
+        println!("File: {} does not exist", creds);//
+        return CString::new("FAIL").unwrap();	   //
+    }						                       //
+    //---------------------------------------------//
+    
+    //------------------------------------------------------------------------//
+    let mut oflags = BTreeSet::new();
+    oflags.insert(OrderFlag::Post);
+    let come_on = Command::LimitBuy {volume: vol.clone(), pair: par.clone(), price: pryce.clone()};//
+    let mut config = KrakConfig{					      //
+    	command: come_on,						      //  This creates an order to then pass to add_market_order
+    	creds: creds.clone(),						      //
+    	validate: false,						      //
+    };									      //
+    //------------------------------------------------------------------------//
+	
+    //--------------------------------------------------------------------------------//
+    let mut krc = krakenrs::KrakenRestConfig::default();                              //
+    let credentials = match krakenrs::KrakenCredentials::load_json_file(creds_path) { //  
+        Ok(res) => res,							      //
+        Err(e) => {								      //
+            println!("error loading creds, {}", e);				      //   Creates KrakenRestAPI object 
+            return CString::new("FAIL").unwrap();				      //   and loads the creds into it
+        }									      //
+    };										      //
+    krc.creds = credentials; 							      //
+    //--------------------------------------------------------------------------------//
+
+    
+    //-------------------------------------------------------------------------------------//
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");// 
+    let result = api.add_limit_order(LimitOrder {					   //
+    						bs_type: BsType::Buy,			   //
+                        			volume: vol,				   //
                         			pair: par,
-                        			oflags: Default::default(),
-                    				},
-                    			None,
-                    			config.validate,
-    					).expect(&"api call failed");
-    println!(" | sale successful | ");
-    //------------------------------------------------------//
-                                                            //
-    let ofile = match File::create("sell.json") {//
-        Ok(res) => res,				    //
-        Err(e) => {					    //
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };							    //   File Writing Portion,
-    match serde_json::to_writer(ofile, &result) {	    //   creates account balance.json and 
-        Ok(res) => res, 				    //   uses to_writer to write it out 
-        Err(e) => {					    //   as a nice json format
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };							    //
-    //------------------------------------------------------//
-    println!(" | write successful | ");
+                                    price: pryce,				   //
+                        			oflags: Default::default(),		   //	calls add_market_order and adds our order that we created earlier
+                    				},					   //	turns result into a json and then  
+                    			None,						   //	returns it as a CString
+                    			config.validate,				   //
+    					).expect(&"api call failed");			   //
+    let jso = json!(result).to_string();						   //	
+    return CString::new(jso).unwrap();							   //
+    //-------------------------------------------------------------------------------------//
+}
+
+#[no_mangle]
+pub extern "C" fn limit_sell(credens: *const c_char, voll: *const c_char, parr: *const c_char, pricee: *const c_char) -> CString {
+    //---------------------------------------------//
+    let c_str1 = unsafe {		                   //
+        assert!(!voll.is_null());	               //
+        CStr::from_ptr(voll)		               //	turns CString input into Rust String
+    };					                           //	for volume selection.
+    let vol = c_str1.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+    
+    //---------------------------------------------//
+    let c_str2 = unsafe {		                   //
+        assert!(!parr.is_null());	               //
+        CStr::from_ptr(parr)		               //	turns CString input into Rust String
+    };					                           //	for coin selection.
+    let par = c_str2.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+
+    //---------------------------------------------//
+    let c_str3 = unsafe {		                   //
+        assert!(!pricee.is_null());	               //
+        CStr::from_ptr(pricee)		               //	turns CString input into Rust String
+    };					                           //	for coin selection.
+    let pryce = c_str2.to_str().unwrap().to_string();//
+    //---------------------------------------------//
+    
+    //---------------------------------------------//
+    let c_str = unsafe {			               //
+        assert!(!credens.is_null());	    	   //
+        CStr::from_ptr(credens)		               //
+    };						                       //
+    let creden_c = c_str.to_str().unwrap();	       //	turns cstring input into Rust path &
+    let creds:String = creden_c.to_string();       // 	Checks Creds File 
+    let creds_path = Path::new(&creds);            //
+    if !creds_path.is_file() {			           //      
+        println!("File: {} does not exist", creds);//
+        return CString::new("FAIL").unwrap();	   //
+    }						                       //
+    //---------------------------------------------//
+    
+    //------------------------------------------------------------------------//
+    let mut oflags = BTreeSet::new();
+    oflags.insert(OrderFlag::Post);
+    let come_on = Command::LimitSell {volume: vol.clone(), pair: par.clone(), price: pryce.clone()};//
+    let mut config = KrakConfig{					      //
+    	command: come_on,						      //  This creates an order to then pass to add_market_order
+    	creds: creds.clone(),						      //
+    	validate: false,						      //
+    };									      //
+    //------------------------------------------------------------------------//
+	
+    //--------------------------------------------------------------------------------//
+    let mut krc = krakenrs::KrakenRestConfig::default();                              //
+    let credentials = match krakenrs::KrakenCredentials::load_json_file(creds_path) { //  
+        Ok(res) => res,							      //
+        Err(e) => {								      //
+            println!("error loading creds, {}", e);				      //   Creates KrakenRestAPI object 
+            return CString::new("FAIL").unwrap();				      //   and loads the creds into it
+        }									      //
+    };										      //
+    krc.creds = credentials; 							      //
+    //--------------------------------------------------------------------------------//
+
+    
+    //-------------------------------------------------------------------------------------//
+    let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");// 
+    let result = api.add_limit_order(LimitOrder {					   //
+    						bs_type: BsType::Sell,			   //
+                        			volume: vol,				   //
+                        			pair: par,
+                                    price: pryce,				   //
+                        			oflags: Default::default(),		   //	calls add_market_order and adds our order that we created earlier
+                    				},					   //	turns result into a json and then  
+                    			None,						   //	returns it as a CString
+                    			config.validate,				   //
+    					).expect(&"api call failed");			   //
+    let jso = json!(result).to_string();						   //	
+    return CString::new(jso).unwrap();							   //
+    //-------------------------------------------------------------------------------------//
 }
 
 #[no_mangle]

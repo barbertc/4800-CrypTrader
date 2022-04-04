@@ -40,8 +40,10 @@ app.use("/api/users", users);
 const rust = ffi.Library('./rust-app/target/release/librust_app', {
   'test_fun': ['int', ['int', 'int']],
   'test_fun_jr': ['string', ['int']],
-  'account_balance': ['string', ['string', 'string']],
-  'ticker': ['string', ['string']]
+  'account_balance': ['string', ['string']],
+  'ticker': ['string', ['string']],
+  'mk_buy': ['string', ['string', 'string', 'string']],
+  'mk_sell': ['string', ['string', 'string', 'string']]
 })
 
 app.get('/api/rust-functions/test', (req, res) => {
@@ -52,15 +54,27 @@ app.get('/api/rust-functions/testjr', (req, res) => {
   res.send({ currentValue: rust.test_fun_jr(11) })
 })
 
-// app.get('/api/rust-functions/account-balance', (req, res) => {
-//   const accBalance = rust.account_balance('./rust-app/creds.json', 'stermonzl')
-//   res.send(JSON.parse(accBalance))
-// })
+app.get('/api/rust-functions/account-balance', (req, res) => {
+  const accBalance = rust.account_balance('./creds-caleb.json')
+  res.send(JSON.parse(accBalance))
+})
 
 app.get('/api/rust-functions/ticker', (req, res) => {
   const ticky = rust.ticker('DOTUSD')
   console.log(ticky)
   res.send(JSON.parse(ticky))
+})
+
+app.get('/api/rust-functions/buy', (req, res) => {
+  const buy = rust.mk_buy('./creds-zaddydaddy.json', '0.001', 'ETHUSD')
+  console.log(buy)
+  res.send(JSON.parse(buy))
+})
+
+app.get('/api/rust-functions/sell', (req, res) => {
+  const sell = rust.mk_sell('./creds-zaddydaddy.json', '0.001', 'ETHUSD')
+  console.log(sell)
+  res.send(JSON.parse(sell))
 })
 
 const port = process.env.PORT || 5000;
