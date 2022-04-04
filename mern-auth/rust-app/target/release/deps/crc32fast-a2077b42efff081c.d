@@ -1,0 +1,12 @@
+/home/caleb/capstone/mern-auth/rust-app/target/release/deps/crc32fast-a2077b42efff081c.rmeta: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/baseline.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/combine.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/specialized/mod.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/table.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/specialized/pclmulqdq.rs
+
+/home/caleb/capstone/mern-auth/rust-app/target/release/deps/libcrc32fast-a2077b42efff081c.rlib: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/baseline.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/combine.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/specialized/mod.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/table.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/specialized/pclmulqdq.rs
+
+/home/caleb/capstone/mern-auth/rust-app/target/release/deps/crc32fast-a2077b42efff081c.d: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/baseline.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/combine.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/specialized/mod.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/table.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/specialized/pclmulqdq.rs
+
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/lib.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/baseline.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/combine.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/specialized/mod.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/table.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/crc32fast-1.3.2/src/specialized/pclmulqdq.rs:

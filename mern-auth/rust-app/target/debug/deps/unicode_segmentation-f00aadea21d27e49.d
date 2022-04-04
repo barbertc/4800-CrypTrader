@@ -1,0 +1,11 @@
+/home/caleb/capstone/mern-auth/rust-app/target/debug/deps/unicode_segmentation-f00aadea21d27e49.rmeta: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/grapheme.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/sentence.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/word.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/tables.rs
+
+/home/caleb/capstone/mern-auth/rust-app/target/debug/deps/libunicode_segmentation-f00aadea21d27e49.rlib: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/grapheme.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/sentence.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/word.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/tables.rs
+
+/home/caleb/capstone/mern-auth/rust-app/target/debug/deps/unicode_segmentation-f00aadea21d27e49.d: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/grapheme.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/sentence.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/word.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/tables.rs
+
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/lib.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/grapheme.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/sentence.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/word.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-segmentation-1.9.0/src/tables.rs:

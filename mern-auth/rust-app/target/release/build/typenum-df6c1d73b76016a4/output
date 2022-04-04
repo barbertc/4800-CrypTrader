@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/home/caleb/capstone/mern-auth/rust-app/target/release/build/typenum-df6c1d73b76016a4/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/home/caleb/capstone/mern-auth/rust-app/target/release/build/typenum-df6c1d73b76016a4/out/op.rs

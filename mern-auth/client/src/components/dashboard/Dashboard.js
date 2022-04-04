@@ -14,6 +14,7 @@ class Dashboard extends Component {
       gain: 15,
       bought: false,
       balance: 0,
+      currentValue: null
     }
   }
 
@@ -21,15 +22,28 @@ class Dashboard extends Component {
     { value: 'BTCUSD', label: 'BTCUSD' },
     { value: 'ETHUSD', label: 'ETHUSD' },
     { value: 'DOT', label: 'DOT' },
-    { value: 'DOGE', label: 'DOGE' }
+    { value: 'DOGE', label: 'DOGE' },
+    { value: 'BOOTY', label: 'BOOTY' }
   ]
 
   componentDidMount() {
-    axios.get('localhost:5000/api/rust-functions/test').then(res => {
+    axios.get('/api/rust-functions/test').then(res => {
       const test = res.data
       console.log(test)
-      this.setState({ test })
-    }).catch(this.setState({ balance: 'API Error' }))
+      this.setState(test)
+    }).catch(this.setState({ balance: 'API Error' }));
+
+    axios.get('/api/rust-functions/testjr').then(res => {
+      const curValue = res.data
+      console.log(curValue)
+      this.setState(curValue)
+    }).catch(this.setState({ currentValue: 'API Error' }))
+
+    axios.get('/api/rust-functions/ticker').then(res => {
+      const tickerData = res.data.DOTUSD.a[0]
+      console.log(tickerData)
+      this.setState({ currentValue: tickerData })
+    }).catch(this.setState({ currentValue: "API Error" }))
   }
 
   onLogoutClick = e => {
@@ -126,7 +140,7 @@ class Dashboard extends Component {
                 marginTop: "1rem",
               }}
               onClick={this.onSubmit}
-              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+              className="btn btn-large waves-effect waves-light hoverable dark-green accent-3"
             >
               Submit
             </button>
@@ -138,7 +152,7 @@ class Dashboard extends Component {
 
   Peter = () => {
     return (
-      <div className="center-align">
+      <div style={{alignItems: 'center'}}>
         <div className="landing-copy col s12 center-align">
           <h4><b>Peter is Making You Money</b></h4>
           <hr></hr>
@@ -162,6 +176,7 @@ class Dashboard extends Component {
           <h5>Current {this.state.coin} Value</h5>
           <hr></hr>
           <p className="flow-text grey-text text-darken-1">
+            ${this.state.currentValue}
           </p>
         </div>
         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
@@ -201,13 +216,13 @@ class Dashboard extends Component {
               <b>Wallet Ballance</b>
               <hr></hr>
               <p className="flow-text grey-text text-darken-1">
-                {this.state.balance}
+                ${this.state.balance}
               </p>
             </h4>
             <br></br>
             {!this.state.bought ? <this.InputForm /> : null}
             {this.state.bought ? <this.Peter /> : null} 
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+            {/* <div className="col s12" style={{ paddingLeft: "11.250px" }}>
               <button
                 style={{
                   width: "150px",
@@ -223,6 +238,19 @@ class Dashboard extends Component {
               >
                 Logout
               </button>
+            </div> */}
+            <div className="col s12" style={{align: "center"}}>
+              <a 
+                href="."
+                onClick={this.onLogoutClick}
+                style={{
+                  color: 'red',
+                  position: 'absolute',
+                  bottom: '35px',
+                  fontSize: "18px",
+                  marginLeft: '-30px'
+                }}
+              >Logout</a>
             </div>
           </div>
         </div>

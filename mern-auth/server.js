@@ -39,11 +39,27 @@ app.use("/api/users", users);
 
 const rust = ffi.Library('./rust-app/target/release/librust_app', {
   'test_fun': ['int', ['int', 'int']],
-  'account_balance': ['void', ['string', 'string']]
+  'test_fun_jr': ['string', ['int']],
+  'account_balance': ['string', ['string', 'string']],
+  'ticker': ['string', []]
 })
 
 app.get('/api/rust-functions/test', (req, res) => {
   res.send({ balance: rust.test_fun(6, 9) })
+})
+
+app.get('/api/rust-functions/testjr', (req, res) => {
+  res.send({ currentValue: rust.test_fun_jr(11) })
+})
+
+// app.get('/api/rust-functions/account-balance', (req, res) => {
+//   const accBalance = rust.account_balance('./rust-app/creds.json', 'stermonzl')
+//   res.send(JSON.parse(accBalance))
+// })
+
+app.get('/api/rust-functions/ticker', (req, res) => {
+  const ticky = rust.ticker()
+  res.send(JSON.parse(ticky))
 })
 
 const port = process.env.PORT || 5000;

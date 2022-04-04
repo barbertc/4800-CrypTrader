@@ -1,7 +1,9 @@
 use serde_json::to_string_pretty;
+use serde_json::{Result, Value, json};
+use serde_json;
 use std::path::Path;
 use std::fs::File;
-extern crate serde_json;
+//extern crate serde_json;
 extern crate serde_derive;
 use std::ffi::CString;
 use core::convert::TryFrom;
@@ -84,14 +86,18 @@ enum Command {
 	
 // }
 
+struct AccountBal {
+    coin1: String,
+    coin2: String,
+}
+
 #[no_mangle]
-pub extern fn account_balance(credens: CString, _user: CString) {
+pub extern fn account_balance(credens: CString, _user: CString) -> CString {
     let creds:String = credens.into_string().expect("not working");
     //---------------------------------------------//
     let creds_path = Path::new(&creds);            //
     if !creds_path.is_file() {			           //    
         println!("File: {} does not exist", creds);// 	Checks Creds File 
-        return;				   //
     }						   //
     println!("Found your path at: {}", creds);	   //
     //---------------------------------------------//
@@ -99,13 +105,7 @@ pub extern fn account_balance(credens: CString, _user: CString) {
 
     //--------------------------------------------------------------------------------//
     let mut krc = krakenrs::KrakenRestConfig::default();                              //
-    let credentials = match krakenrs::KrakenCredentials::load_json_file(creds_path) { //  
-        Ok(res) => res,							      //
-        Err(e) => {								      //
-            println!("error loading creds, {}", e);				      //   Creates KrakenRestAPI object 
-            return;								      //   and loads the creds into it
-        }									      //
-    };										      //
+    let credentials = krakenrs::KrakenCredentials::load_json_file(creds_path).expect("WHY");										      //
     krc.creds = credentials; 							      //
     //--------------------------------------------------------------------------------//
 
@@ -114,25 +114,59 @@ pub extern fn account_balance(credens: CString, _user: CString) {
     
     // This is where we make the actual call to the api to get our information.    
     let result = api.get_account_balance().expect("api call failed"); 
+    // println!("{:?}",result);
 
-    //------------------------------------------------------//
-                                                            //
-    let ofile = match File::create("account_balance.json") {//
-        Ok(res) => res,				    //
-        Err(e) => {					    //
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };							    //   File Writing Portion,
-    match serde_json::to_writer(ofile, &result) {	    //   creates account balance.json and 
-        Ok(res) => res, 				    //   uses to_writer to write it out 
-        Err(e) => {					    //   as a nice json format
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };	
+    let json_string = json!(result).to_string();
+    return CString::new(json_string).expect("No");
+
+    // let sorted_result = result.into_iter().collect::<BTreeMap<_, _>>();
+    // //let answer = String::from_utf8_lossy();
+    // println!("{:?}", sorted_result);
+    // if let Some(coin) = sorted_result.get("ETHUSD") {
+    //     let coin: String = coin.to_string().clone();
+    //     println!("{}", coin);
+    //     return CString::new(coin).unwrap();
+    // }
+    // else {
+    //     return CString::new("blank").unwrap();
+    // }
+    //return sorted_result;
+        // //------------------------------------------------------//
+    //                                                         //
+    // let ofile = match File::create("account_balance.json") {//
+    //     Ok(res) => res,				    //
+    //     Err(e) => {					    //
+    //         println!("error writing json, {}", e);	    //
+    //         				    //
+    //     }						    //
+    // };							    //   File Writing Portion,
+    // match serde_json::to_writer(ofile, &result) {	    
+    //     Ok(res) => res, 				    
+    //     Err(e) => {					    
+    //         println!("error writing json, {}", e);	    
+    //         				    //
+    //     }						    //
+    // };	
     
-    //------------------------------------------------------//
+    // //------------------------------------------------------//
+    // //------------------------------------------------------//
+    //                                                         //
+    // let ofile = match File::create("account_balance.json") {//
+    //     Ok(res) => res,				    //
+    //     Err(e) => {					    //
+    //         println!("error writing json, {}", e);	    //
+    //         				    //
+    //     }						    //
+    // };							    //   File Writing Portion,
+    // match serde_json::to_writer(ofile, &result) {	    
+    //     Ok(res) => res, 				    
+    //     Err(e) => {					    
+    //         println!("error writing json, {}", e);	    
+    //         				    //
+    //     }						    //
+    // };	
+    
+    // //------------------------------------------------------//
 }
 
 #[no_mangle]
@@ -186,53 +220,18 @@ pub extern fn get_orders(creds: String, _user: String) {
 }
 
 #[no_mangle]
-pub extern fn ticker(creds: String, coin: String) {
-    
-    //---------------------------------------------//
-    let creds_path = Path::new(&creds);            //
-    if !creds_path.is_file() {			   //    
-        println!("File: {} does not exist", creds);// 	Checks Creds File 
-        return;				   //
-    }						   //
-    //println!("Found your path at: {}", creds);	   //
-    //---------------------------------------------//
-
-
+pub extern fn ticker() -> CString {
     //--------------------------------------------------------------------------------//
-    let mut krc = krakenrs::KrakenRestConfig::default();                              //
-    let credentials = match krakenrs::KrakenCredentials::load_json_file(creds_path) { //  
-        Ok(res) => res,							      //
-        Err(e) => {								      //
-            println!("error loading creds, {}", e);				      //   Creates KrakenRestAPI object 
-            return;								      //   and loads the creds into it
-        }									      //
-    };										      //
-    krc.creds = credentials; 							      //
-    //--------------------------------------------------------------------------------//
-
-
+    let mut krc = krakenrs::KrakenRestConfig::default();
     let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api"); // problem child!
-    
-    // This is where we make the actual call to the api to get our information.    
-    let result = api.ticker(vec![coin]).expect("api call failed"); 
-
-    //------------------------------------------------------//
-                                                            //
-    let ofile = match File::create("ticker.json") {//
-        Ok(res) => res,				    //
-        Err(e) => {					    //
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };							    //   File Writing Portion,
-    match serde_json::to_writer(ofile, &result) {	    //   creates account balance.json and 
-        Ok(res) => res, 				    //   uses to_writer to write it out 
-        Err(e) => {					    //   as a nice json format
-            println!("error writing json, {}", e);	    //
-            return;					    //
-        }						    //
-    };							    //
-    //------------------------------------------------------//
+    // let coiin = coin.into_string().unwrap();
+    //This is where we make the actual call to the api to get our information.
+    let result = api.ticker(vec!["DOTUSD".to_string()]).expect("api call failed");
+    let jso = json!(result).to_string();
+    //println!("{:?}", jso);
+    let json_string = CString::new(jso).unwrap();
+    return json_string;
+    // return coin;
 }
 
 #[no_mangle]
@@ -378,4 +377,9 @@ pub extern fn mk_sell(creds: String, vol: String, par: String) {
 #[no_mangle]
 pub extern fn test_fun(n1: i32, n2: i32) -> i32 {
     return n1 * n2;
+}
+
+#[no_mangle]
+pub extern fn test_fun_jr(n: i32) -> CString {
+    return CString::new("Look at this").expect("This doesnt work");
 }
