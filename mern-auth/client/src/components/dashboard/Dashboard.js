@@ -19,11 +19,47 @@ class Dashboard extends Component {
   }
 
   options = [
-    { value: 'BTCUSD', label: 'BTCUSD' },
-    { value: 'ETHUSD', label: 'ETHUSD' },
-    { value: 'DOT', label: 'DOT' },
-    { value: 'DOGE', label: 'DOGE' },
-    { value: 'BOOTY', label: 'BOOTY' }
+    { value: 'BTCUSD', label: 'BITCOIN' },
+    { value: 'XETHUSD', label: 'ETHERIUM' },
+    { value: 'DOTUSD', label: 'POLKADOT' },
+    { value: 'DOGEUSD', label: 'DOGE COIN' },
+    { value: 'SOLUSD', label: 'SOLANA' },
+    { value: 'ADAUSD', label: 'CARDANO' },
+    { value: 'LUNAUSD', label: 'TERRA' },
+    { value: 'XRPUSD', label: 'RIPPLE' },
+    { value: 'AVAXUSD', label: 'AVALANCHE' },
+    { value: 'SHIBUSD', label: 'SHIBA INU' },
+    { value: 'MATICUSD', label: 'POLYGON' },
+    { value: 'ATOMUSD', label: 'COSMOS' },
+    { value: 'LTCUSD', label: 'LITECOIN' },
+    { value: 'LINKUSD', label: 'CHAINLINK' },
+    { value: 'UNIUSD', label: 'UNISWAP' },
+    { value: 'TRXUSD', label: 'TRON' },
+    { value: 'ALGOUSD', label: 'ALGORAND' },
+    { value: 'XLMUSD', label: 'LUMEN' },
+    { value: 'MANAUSD', label: 'DECENTRALAND' },
+    { value: 'ICPUSD', label: 'INTERNET COMPUTER PROTOCOL' },
+    { value: 'FILUSD', label: 'FILECOIN' },
+    { value: 'WAVESUSD', label: 'WAVES' },
+    { value: 'XMRUSD', label: 'MONERO' },
+    { value: 'SANDUSD', label: 'SAND' },
+    { value: 'AXSUSD', label: 'AXIE INFINITY SHARDS' },
+    { value: 'XTZUSD', label: 'TEZOS' },
+    { value: 'APEUSD', label: 'APECOIN' },
+    { value: 'AAVE', label: 'AAVE' },
+    { value: 'EOSUSD', label: 'EOS' },
+    { value: 'FLOWUSD', label: 'FLOW' },
+    { value: 'ZECUSD', label: 'ZCASH' },
+    { value: 'GRTUSD', label: 'THE GRAPH' },
+    { value: 'MKRUSD', label: 'MAKERDAO' },
+    { value: 'CVXUSD', label: 'CONVEX' },
+    { value: 'GALAUSD', label: 'GALA GAMES' },
+    { value: 'QNTUSD', label: 'QUANT' },
+    { value: 'KSMUSD', label: 'KUSAMA' },
+    { value: 'CHZUSD', label: 'CHILIZ' },
+    { value: 'ENJUSD', label: 'ENJIN' },
+    { value: 'LRCUSD', label: 'LOOPRING' },
+    { value: 'DASHUSD', label: 'DASH' }
   ]
 
   componentDidMount() {
@@ -222,24 +258,24 @@ class Dashboard extends Component {
             <br></br>
             {!this.state.bought ? <this.InputForm /> : null}
             {this.state.bought ? <this.Peter /> : null} 
-            {/* <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+            <div className="col s10" style={{ paddingLeft: "11.250px" }}>
               <button
                 style={{
                   width: "150px",
                   borderRadius: "3px",
                   letterSpacing: "1.5px",
                   marginTop: "1rem",
-                  // position: "absolute",
-                  // bottom: "20px",
-                  // marginLeft: "-312px"
+                  position: "absolute",
+                  bottom: "20px",
+                  marginLeft: "-15px"
                 }}
                 onClick={this.onLogoutClick}
-                className="btn btn-large waves-effect waves-light hoverable red accent-3"
+                className="btn btn-large btn-flat waves-effect white dark-green-text"
               >
                 Logout
               </button>
-            </div> */}
-            <div className="col s12" style={{align: "center"}}>
+            </div>
+            {/* <div className="col s12" style={{align: "center"}}>
               <a 
                 href="."
                 onClick={this.onLogoutClick}
@@ -251,7 +287,7 @@ class Dashboard extends Component {
                   marginLeft: '-30px'
                 }}
               >Logout</a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

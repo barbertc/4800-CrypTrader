@@ -5,7 +5,6 @@ use std::path::Path;
 use std::fs::File;
 //extern crate serde_json;
 extern crate serde_derive;
-use std::ffi::CString;
 use core::convert::TryFrom;
 use core::fmt::Debug;
 use krakenrs::{BsType, KrakenCredentials, KrakenRestAPI, KrakenRestConfig, LimitOrder, MarketOrder, OrderFlag};
@@ -21,6 +20,9 @@ use structopt::StructOpt;
 use displaydoc::Display;
 use colored::*;
 use serde_json::to_string;
+use std::os::raw::c_char;
+use std::ffi::{CString,CStr};
+
 #[derive(StructOpt, Debug)]
 struct KrakConfig {
     #[structopt(subcommand,)]
@@ -220,18 +222,24 @@ pub extern fn get_orders(creds: String, _user: String) {
 }
 
 #[no_mangle]
-pub extern fn ticker() -> CString {
+pub extern "C" fn ticker(coin: *const c_char) -> CString {
+    let c_str = unsafe {
+        assert!(!coin.is_null());
+
+        CStr::from_ptr(coin)
+    };
+    let coiin = c_str.to_str().unwrap();
+
     //--------------------------------------------------------------------------------//
     let mut krc = krakenrs::KrakenRestConfig::default();
     let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api"); // problem child!
-    // let coiin = coin.into_string().unwrap();
-    //This is where we make the actual call to the api to get our information.
-    let result = api.ticker(vec!["DOTUSD".to_string()]).expect("api call failed");
+    //let coiin:String = coin.into_string().unwrap();
+    // This is where we make the actual call to the api to get our information.
+    let result = api.ticker(vec![coiin.to_string()]).expect("api call failed");
     let jso = json!(result).to_string();
     //println!("{:?}", jso);
     let json_string = CString::new(jso).unwrap();
     return json_string;
-    // return coin;
 }
 
 #[no_mangle]

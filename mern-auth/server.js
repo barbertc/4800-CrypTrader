@@ -41,7 +41,7 @@ const rust = ffi.Library('./rust-app/target/release/librust_app', {
   'test_fun': ['int', ['int', 'int']],
   'test_fun_jr': ['string', ['int']],
   'account_balance': ['string', ['string', 'string']],
-  'ticker': ['string', []]
+  'ticker': ['string', ['string']]
 })
 
 app.get('/api/rust-functions/test', (req, res) => {
@@ -58,7 +58,8 @@ app.get('/api/rust-functions/testjr', (req, res) => {
 // })
 
 app.get('/api/rust-functions/ticker', (req, res) => {
-  const ticky = rust.ticker()
+  const ticky = rust.ticker('DOTUSD')
+  console.log(ticky)
   res.send(JSON.parse(ticky))
 })
 
