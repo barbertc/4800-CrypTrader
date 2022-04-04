@@ -394,7 +394,7 @@ pub extern "C" fn limit_buy(credens: *const c_char, voll: *const c_char, parr: *
         assert!(!pricee.is_null());	               //
         CStr::from_ptr(pricee)		               //	turns CString input into Rust String
     };					                           //	for coin selection.
-    let pryce = c_str2.to_str().unwrap().to_string();//
+    let pryce = c_str3.to_str().unwrap().to_string();//
     //---------------------------------------------//
     
     //---------------------------------------------//
@@ -475,7 +475,7 @@ pub extern "C" fn limit_sell(credens: *const c_char, voll: *const c_char, parr: 
         assert!(!pricee.is_null());	               //
         CStr::from_ptr(pricee)		               //	turns CString input into Rust String
     };					                           //	for coin selection.
-    let pryce = c_str2.to_str().unwrap().to_string();//
+    let pryce = c_str3.to_str().unwrap().to_string();//
     //---------------------------------------------//
     
     //---------------------------------------------//
