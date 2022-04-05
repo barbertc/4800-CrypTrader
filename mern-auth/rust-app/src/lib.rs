@@ -532,13 +532,3 @@ pub extern "C" fn limit_sell(credens: *const c_char, voll: *const c_char, parr: 
     return CString::new(jso).unwrap();							   //
     //-------------------------------------------------------------------------------------//
 }
-
-#[no_mangle]
-pub extern fn test_fun(n1: i32, n2: i32) -> i32 {
-    return n1 * n2;
-}
-
-#[no_mangle]
-pub extern fn test_fun_jr(n: i32) -> CString {
-    return CString::new("Look at this").expect("This doesnt work");
-}

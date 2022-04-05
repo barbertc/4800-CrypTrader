@@ -43,15 +43,8 @@ const rust = ffi.Library('./rust-app/target/release/librust_app', {
   'account_balance': ['string', ['string']],
   'ticker': ['string', ['string']],
   'mk_buy': ['string', ['string', 'string', 'string']],
-  'mk_sell': ['string', ['string', 'string', 'string']]
-})
-
-app.get('/api/rust-functions/test', (req, res) => {
-  res.send({ balance: rust.test_fun(6, 9) })
-})
-
-app.get('/api/rust-functions/testjr', (req, res) => {
-  res.send({ currentValue: rust.test_fun_jr(11) })
+  'mk_sell': ['string', ['string', 'string', 'string']],
+  'limit_sell': ['string', ['string', 'string', 'string', 'string']]
 })
 
 app.get('/api/rust-functions/account-balance', (req, res) => {
@@ -60,7 +53,7 @@ app.get('/api/rust-functions/account-balance', (req, res) => {
 })
 
 app.get('/api/rust-functions/ticker', (req, res) => {
-  const ticky = rust.ticker('DOTUSD')
+  const ticky = rust.ticker('SOLUSD')
   console.log(ticky)
   res.send(JSON.parse(ticky))
 })
@@ -76,6 +69,10 @@ app.get('/api/rust-functions/sell', (req, res) => {
   console.log(sell)
   res.send(JSON.parse(sell))
 })
+
+// app.get('/api/rust-functions/limit-sell', (req, res) => {
+//   const limitSell = rust.limit_sell('creds', 'vol', 'par', 'coin')
+// })
 
 const port = process.env.PORT || 5000;
 

@@ -69,17 +69,11 @@ class Dashboard extends Component {
       this.setState({ balance:  accBalance})
     }).catch(this.setState({ balance: 'API Error' }))
 
-    axios.get('/api/rust-functions/testjr').then(res => {
-      const curValue = res.data
-      console.log(curValue)
-      this.setState(curValue)
-    }).catch(this.setState({ currentValue: 'API Error' }))
-
-    axios.get('/api/rust-functions/ticker').then(res => {
-      const tickerData = res.data.DOTUSD.a[0]
-      console.log(tickerData)
-      this.setState({ currentValue: tickerData })
-    }).catch(this.setState({ currentValue: "API Error" }))
+    // axios.get('/api/rust-functions/ticker').then(res => {
+    //   const tickerData = res.data.DOTUSD.a[0]
+    //   console.log(tickerData)
+    //   this.setState({ currentValue: tickerData })
+    // }).catch(this.setState({ currentValue: "API Error" }))
   }
 
   displayAccountBalance = data => {
@@ -108,13 +102,28 @@ class Dashboard extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    axios.get('/api/rust-functions/account-balance').then(res => {
+      const accBalance = res.data
+      console.log(accBalance)
+      this.setState({ balance:  accBalance})
+    }).catch(this.setState({ balance: 'API Error' }));
+
+    axios.get('/api/rust-functions/ticker').then(res => {
+      const tickerData = res.data.SOLUSD.a[0]
+      console.log(tickerData)
+      this.setState({ currentValue: tickerData })
+    }).catch(this.setState({ currentValue: "API Error" }))
+
     this.changeView();
-    
-    // const purchase = {
-    //   coin: this.state.coin,
-    //   amount: this.state.amount,
-    //   gain: this.state.gain
-    // }
+
+    setInterval(() => {
+      axios.get('/api/rust-functions/ticker').then(res => {
+        const tickerData = res.data.SOLUSD.a[0]
+        console.log(tickerData)
+        this.setState({ currentValue: tickerData })
+      }).catch(this.setState({ currentValue: "API Error" }))
+    }, 30000)
 
     /** Crypto purchase action steps
      * Done - Replace input display with sell progress
@@ -156,8 +165,7 @@ class Dashboard extends Component {
         </h4>
         <hr></hr>
         <div className="input-field s20">
-          <select id="coin-name" options={this.options} onChange={this.onCoinChange}/>
-          <label htmlFor="coin-name">Select coin</label>
+          <Select id="coin-name" options={this.options} onChange={this.onCoinChange}/>
         </div>
         <form noValidate onSubmit={this.onSubmit}>
           <br></br>
@@ -200,32 +208,34 @@ class Dashboard extends Component {
 
   Peter = () => {
     return (
-      <div style={{alignItems: 'center'}}>
+      <div>
         <div className="landing-copy col s12 center-align">
           <h4><b>Peter is Making You Money</b></h4>
           <hr></hr>
         </div>
         <br></br>
-        <div className="landing-copy col s16 center-align">
-          <h5>Purchase Value</h5>
-          <hr></hr>
-          <p className="flow-text grey-text text-darken-1">
-              ${Number(this.state.amount).toFixed(2)}
-          </p>
-        </div>
-        <div className="landing-copy col s16 center-align">
-          <h5>Sale Value</h5>
-          <hr></hr>
-          <p className="flow-text grey-text text-darken-1">
-            ${this.returnAmount(this.state.amount)}
-          </p>
-        </div>
-        <div className="landing-copy col s16 center-align">
-          <h5>Current {this.state.coin} Value</h5>
-          <hr></hr>
-          <p className="flow-text grey-text text-darken-1">
-            ${this.state.currentValue}
-          </p>
+        <div style={{ alignItems: "center" }}>
+          <div className="landing-copy col s16 center-align">
+            <h5>Purchase Value</h5>
+            <hr></hr>
+            <p className="flow-text grey-text text-darken-1">
+                ${Number(this.state.amount).toFixed(2)}
+            </p>
+          </div>
+          <div className="landing-copy col s16 center-align">
+            <h5>Sale Value</h5>
+            <hr></hr>
+            <p className="flow-text grey-text text-darken-1">
+              ${this.returnAmount(this.state.amount)}
+            </p>
+          </div>
+          <div className="landing-copy col s16 center-align">
+            <h5>Current {this.state.coin} Value</h5>
+            <hr></hr>
+            <p className="flow-text grey-text text-darken-1">
+              {this.state.currentValue}
+            </p>
+          </div>
         </div>
         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
           <button
@@ -236,9 +246,9 @@ class Dashboard extends Component {
               marginTop: "1rem"
             }}
             onClick={this.abort}
-            className="btn btn-large waves-effect waves-light hoverable red accent-3"
+            className="btn btn-large waves-effect waves-light hoverable dark-green accent-3"
           >
-            Abort
+            Buy New Coin
           </button>
         </div>
       </div>
