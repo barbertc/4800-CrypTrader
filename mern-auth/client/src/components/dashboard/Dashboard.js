@@ -14,12 +14,14 @@ class Dashboard extends Component {
       gain: 15,
       bought: false,
       balance: {},
-      currentValue: null
+      oldCoinValue: null,
+      newCoinValue: null,
+      valueUSD: null,
     }
   }
 
   options = [
-    { value: 'BTCUSD', label: 'BITCOIN' },
+    { value: 'XXBTZUSD', label: 'BITCOIN' },
     { value: 'XETHZUSD', label: 'ETHERIUM' },
     { value: 'DOTUSD', label: 'POLKADOT' },
     { value: 'DOGEUSD', label: 'DOGE COIN' },
@@ -65,15 +67,8 @@ class Dashboard extends Component {
   componentDidMount() {
     axios.get('/api/rust-functions/account-balance').then(res => {
       const accBalance = res.data
-      console.log(accBalance)
       this.setState({ balance:  accBalance})
     }).catch(this.setState({ balance: 'API Error' }))
-
-    // axios.get('/api/rust-functions/ticker').then(res => {
-    //   const tickerData = res.data.DOTUSD.a[0]
-    //   console.log(tickerData)
-    //   this.setState({ currentValue: tickerData })
-    // }).catch(this.setState({ currentValue: "API Error" }))
   }
 
   displayAccountBalance = data => {
@@ -85,6 +80,18 @@ class Dashboard extends Component {
     str = str.replaceAll(':', ': ')
 
     return str
+  }
+
+  convertUSDtoCoin = usd => {
+    return usd / this.state.coinValue
+  }
+
+  convertCoinToUSD = coin => {
+    return this.state.coinValue * coin
+  }
+
+  calculateChange = (current, old) => {
+    return current / old
   }
 
   onLogoutClick = e => {
@@ -105,25 +112,24 @@ class Dashboard extends Component {
 
     axios.get('/api/rust-functions/account-balance').then(res => {
       const accBalance = res.data
-      console.log(accBalance)
       this.setState({ balance:  accBalance})
     }).catch(this.setState({ balance: 'API Error' }));
 
     axios.get('/api/rust-functions/ticker').then(res => {
-      const tickerData = res.data.SOLUSD.a[0]
-      console.log(tickerData)
-      this.setState({ currentValue: tickerData })
-    }).catch(this.setState({ currentValue: "API Error" }))
-
+      const tickerData = res.data.XXBTZUSD.a[0]
+      this.setState({ oldCoinValue: tickerData })
+      this.setState({ newCoinValue: tickerData })
+    }).catch(this.setState({ newCoinValue: "API Error" }))
     this.changeView();
 
     setInterval(() => {
       axios.get('/api/rust-functions/ticker').then(res => {
-        const tickerData = res.data.SOLUSD.a[0]
-        console.log(tickerData)
-        this.setState({ currentValue: tickerData })
-      }).catch(this.setState({ currentValue: "API Error" }))
-    }, 30000)
+        const tickerData = res.data.XXBTZUSD.a[0]
+        this.setState({ newCoinValue: tickerData })
+        console.log("Old Value: " + this.state.oldCoinValue)
+        console.log("New Value: " + tickerData)
+      }).catch(this.setState({ newCoinValue: "API Error" }))
+    }, 15000)
 
     /** Crypto purchase action steps
      * Done - Replace input display with sell progress
@@ -216,14 +222,14 @@ class Dashboard extends Component {
         <br></br>
         <div style={{ alignItems: "center" }}>
           <div className="landing-copy col s16 center-align">
-            <h5>Purchase Value</h5>
+            <h5>Value at Purchase</h5>
             <hr></hr>
             <p className="flow-text grey-text text-darken-1">
                 ${Number(this.state.amount).toFixed(2)}
             </p>
           </div>
           <div className="landing-copy col s16 center-align">
-            <h5>Sale Value</h5>
+            <h5>Value at Sale</h5>
             <hr></hr>
             <p className="flow-text grey-text text-darken-1">
               ${this.returnAmount(this.state.amount)}
@@ -233,7 +239,7 @@ class Dashboard extends Component {
             <h5>Current {this.state.coin} Value</h5>
             <hr></hr>
             <p className="flow-text grey-text text-darken-1">
-              {this.state.currentValue}
+              {this.state.newCoinValue} : ${Number(this.state.amount * this.calculateChange(this.state.newCoinValue, this.state.oldCoinValue)).toFixed(2)}
             </p>
           </div>
         </div>
