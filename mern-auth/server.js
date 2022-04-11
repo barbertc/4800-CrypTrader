@@ -52,13 +52,15 @@ app.get('/api/rust-functions/account-balance', (req, res) => {
   res.send(JSON.parse(accBalance))
 })
 
-app.get('/api/rust-functions/ticker', (req, res) => {
-  const ticky = rust.ticker('BTCUSD')
+app.get('/api/rust-functions/ticker/:coin', (req, res) => {
+  console.log(req.params.coin)
+  const ticky = rust.ticker(req.params.coin)
   res.send(JSON.parse(ticky))
 })
 
-app.get('/api/rust-functions/buy', (req, res) => {
-  const buy = rust.mk_buy('./creds-zaddydaddy.json', '0.001', 'ETHUSD')
+app.get('/api/rust-functions/buy/:amount-:coin-:limitSell', (req, res) => {
+  const buy = rust.mk_buy('./creds-caleb.json', req.params.amount, req.params.coin)
+  const sell = rust.limit_sell('./creds-caleb.json', req.params.limitSell, req.params.coin)
   console.log(buy)
   res.send(JSON.parse(buy))
 })

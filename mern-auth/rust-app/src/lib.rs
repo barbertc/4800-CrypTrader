@@ -195,7 +195,7 @@ pub extern "C" fn cancel_order(credens: *const c_char, idd: *const c_char) -> CS
     //----------------------------------//
 
     //-------------------------------------------------------------------------------------//
-    let mut krc = krakenrs::KrakenRestConfig::default();                                   //
+    let krc = krakenrs::KrakenRestConfig::default();                                   //
     let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");//    creates kraken api object and makes ticker call
     let result = api.cancel_order(id.to_string()).expect("api call failed");               //    saving output and turning it into json to then 
     let jso = json!(result).to_string();                                                   //    return it as a CString
@@ -221,7 +221,7 @@ pub extern "C" fn cancel_all_orders(credens: *const c_char) -> CString {
     //---------------------------------------------//
 
     //-------------------------------------------------------------------------------------//
-    let mut krc = krakenrs::KrakenRestConfig::default();                                   //
+    let krc = krakenrs::KrakenRestConfig::default();                                   //
     let api = krakenrs::KrakenRestAPI::try_from(krc).expect("could not create kraken api");//    creates kraken api object and makes ticker call
     let result = api.cancel_all_orders().expect("api call failed");               //    saving output and turning it into json to then 
     let jso = json!(result).to_string();                                                   //    return it as a CString
@@ -264,7 +264,7 @@ pub extern "C" fn mk_buy(credens: *const c_char, voll: *const c_char, parr: *con
     
     //------------------------------------------------------------------------//
     let come_on = Command::MarketBuy {volume: vol.clone(), pair: par.clone()};//
-    let mut config = KrakConfig{					      //
+    let config = KrakConfig{					      //
     	command: come_on,						      //  This creates an order to then pass to add_market_order
     	creds: creds.clone(),						      //
     	validate: false,						      //
