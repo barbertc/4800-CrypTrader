@@ -335,7 +335,7 @@ pub extern "C" fn mk_sell(credens: *const c_char, voll: *const c_char, parr: *co
     
     //------------------------------------------------------------------------//
     let come_on = Command::MarketSell {volume: vol.clone(), pair: par.clone()};//
-    let mut config = KrakConfig{					      //
+    let config = KrakConfig{					      //
     	command: come_on,						      //  This creates an order to then pass to add_market_order
     	creds: creds.clone(),						      //
     	validate: false,						      //

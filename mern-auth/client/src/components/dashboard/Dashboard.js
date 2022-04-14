@@ -38,20 +38,20 @@ class Dashboard extends Component {
     { value: 'UNIUSD', label: 'UNISWAP' },
     { value: 'TRXUSD', label: 'TIM TRON' },
     { value: 'ALGOUSD', label: 'ALGORAND' },
-    { value: 'XLMUSD', label: 'LUMEN' },
+    { value: 'XXLMZUSD', label: 'LUMEN' },
     { value: 'MANAUSD', label: 'DECENTRALAND' },
     { value: 'ICPUSD', label: 'INTERNET COMPUTER PROTOCOL' },
     { value: 'FILUSD', label: 'FILECOIN' },
     { value: 'WAVESUSD', label: 'WAVES' },
-    { value: 'XMRUSD', label: 'MONERO' },
+    { value: 'XXMRZUSD', label: 'MONERO' },
     { value: 'SANDUSD', label: 'SAND' },
     { value: 'AXSUSD', label: 'AXIE INFINITY SHARDS' },
     { value: 'XTZUSD', label: 'TEZOS' },
     { value: 'APEUSD', label: 'APECOIN' },
-    { value: 'AAVE', label: 'AAVE' },
+    { value: 'AAVEUSD', label: 'AAVE' },
     { value: 'EOSUSD', label: 'EOS' },
     { value: 'FLOWUSD', label: 'FLOW' },
-    { value: 'ZECUSD', label: 'ZCASH' },
+    { value: 'XZECZUSD', label: 'ZCASH' },
     { value: 'GRTUSD', label: 'THE GRAPH' },
     { value: 'MKRUSD', label: 'MAKERDAO' },
     { value: 'CVXUSD', label: 'CONVEX' },
@@ -111,13 +111,6 @@ class Dashboard extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    // const limitSellValue = this.convertUSDtoCoin(this.returnAmount(this.state.amount), this.state.oldCoinValue)
-    // const sellRequest = `/api/rust-functions/buy/:${this.state.amount}-:${this.state.coin}-:${limitSellValue}`
-    // axios.get(sellRequest).then(res => {
-    //   console.log(res.data)
-    //   this.setState({ bought: true })
-    // }).catch(this.setState({ bought: false }))
-
     axios.get('/api/rust-functions/account-balance').then(res => {
       const accBalance = res.data
       this.setState({ balance:  accBalance})
@@ -129,8 +122,9 @@ class Dashboard extends Component {
       this.setState({ oldCoinValue: tickerData })
       this.setState({ newCoinValue: tickerData })
     }).catch(this.setState({ newCoinValue: "API Error" }))
-    this.changeView();
 
+    this.changeView();
+    
     setInterval(() => {
       axios.get(tickerReq).then(res => {
         const tickerData = res.data[this.state.coin].a[0]
@@ -139,6 +133,13 @@ class Dashboard extends Component {
         // console.log("New Value: " + tickerData)
       }).catch(this.setState({ newCoinValue: "API Error" }))
     }, 15000)
+
+    const limitSellValue = this.convertUSDtoCoin(this.returnAmount(this.state.amount), this.state.oldCoinValue)
+    const buyReq = `/api/rust-functions/buy/:${this.state.amount}-:${this.state.coin}-:${limitSellValue}`
+    axios.get(buyReq).then(res => {
+      console.log(res.data)
+      this.setState({ bought: true })
+    }).catch(this.setState({ bought: false }))
 
     /** Crypto purchase action steps
      * Done - Replace input display with sell progress
@@ -345,7 +346,7 @@ class Dashboard extends Component {
                   marginTop: "1rem",
                   position: "absolute",
                   bottom: "20px",
-                  marginLeft: "-15px"
+                  marginLeft: "-14.5px"
                 }}
                 onClick={this.onLogoutClick}
                 className="btn btn-large btn-flat waves-effect white dark-green-text"
