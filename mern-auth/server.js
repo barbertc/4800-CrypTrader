@@ -54,7 +54,7 @@ app.get('/api/rust-functions/account-balance', (req, res) => {
 
 app.get('/api/rust-functions/ticker', (req, res) => {
   const ticky = rust.ticker('SOLUSD')
-  console.log(ticky)
+  // console.log(ticky)
   res.send(JSON.parse(ticky))
 })
 

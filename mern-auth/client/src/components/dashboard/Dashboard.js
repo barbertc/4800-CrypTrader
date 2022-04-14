@@ -113,7 +113,7 @@ class Dashboard extends Component {
       const tickerData = res.data.SOLUSD.a[0]
       console.log(tickerData)
       this.setState({ currentValue: tickerData })
-    }).catch(this.setState({ currentValue: "API Error" }))
+    }).catch(this.setState({ currentValue: "--" }))
 
     this.changeView();
 
@@ -122,8 +122,8 @@ class Dashboard extends Component {
         const tickerData = res.data.SOLUSD.a[0]
         console.log(tickerData)
         this.setState({ currentValue: tickerData })
-      }).catch(this.setState({ currentValue: "API Error" }))
-    }, 30000)
+      }).catch(this.setState({ currentValue: "--" }))
+    }, 15000)
 
     /** Crypto purchase action steps
      * Done - Replace input display with sell progress
@@ -216,14 +216,14 @@ class Dashboard extends Component {
         <br></br>
         <div style={{ alignItems: "center" }}>
           <div className="landing-copy col s16 center-align">
-            <h5>Purchase Value</h5>
+            <h5>Value at Purchase</h5>
             <hr></hr>
             <p className="flow-text grey-text text-darken-1">
                 ${Number(this.state.amount).toFixed(2)}
             </p>
           </div>
           <div className="landing-copy col s16 center-align">
-            <h5>Sale Value</h5>
+            <h5>Value at Sale</h5>
             <hr></hr>
             <p className="flow-text grey-text text-darken-1">
               ${this.returnAmount(this.state.amount)}
