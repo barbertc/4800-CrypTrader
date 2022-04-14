@@ -14,42 +14,44 @@ class Dashboard extends Component {
       gain: 15,
       bought: false,
       balance: {},
-      currentValue: null
+      oldCoinValue: null,
+      newCoinValue: null,
+      valueUSD: null
     }
   }
 
   options = [
-    { value: 'BTCUSD', label: 'BITCOIN' },
+    { value: 'XXBTZUSD', label: 'BITCOIN' },
     { value: 'XETHZUSD', label: 'ETHERIUM' },
     { value: 'DOTUSD', label: 'POLKADOT' },
     { value: 'DOGEUSD', label: 'DOGE COIN' },
     { value: 'SOLUSD', label: 'SOLANA' },
     { value: 'ADAUSD', label: 'CARDANO' },
     { value: 'LUNAUSD', label: 'TERRA' },
-    { value: 'XRPUSD', label: 'RIPPLE' },
+    { value: 'XXRPZUSD', label: 'RIPPLE' },
     { value: 'AVAXUSD', label: 'AVALANCHE' },
     { value: 'SHIBUSD', label: 'SHIBA INU' },
     { value: 'MATICUSD', label: 'POLYGON' },
     { value: 'ATOMUSD', label: 'COSMOS' },
-    { value: 'LTCUSD', label: 'LITECOIN' },
+    { value: 'XLTCZUSD', label: 'LITECOIN' },
     { value: 'LINKUSD', label: 'CHAINLINK' },
     { value: 'UNIUSD', label: 'UNISWAP' },
-    { value: 'TRXUSD', label: 'TRON' },
+    { value: 'TRXUSD', label: 'TIM TRON' },
     { value: 'ALGOUSD', label: 'ALGORAND' },
-    { value: 'XLMUSD', label: 'LUMEN' },
+    { value: 'XXLMZUSD', label: 'LUMEN' },
     { value: 'MANAUSD', label: 'DECENTRALAND' },
     { value: 'ICPUSD', label: 'INTERNET COMPUTER PROTOCOL' },
     { value: 'FILUSD', label: 'FILECOIN' },
     { value: 'WAVESUSD', label: 'WAVES' },
-    { value: 'XMRUSD', label: 'MONERO' },
+    { value: 'XXMRZUSD', label: 'MONERO' },
     { value: 'SANDUSD', label: 'SAND' },
     { value: 'AXSUSD', label: 'AXIE INFINITY SHARDS' },
     { value: 'XTZUSD', label: 'TEZOS' },
     { value: 'APEUSD', label: 'APECOIN' },
-    { value: 'AAVE', label: 'AAVE' },
+    { value: 'AAVEUSD', label: 'AAVE' },
     { value: 'EOSUSD', label: 'EOS' },
     { value: 'FLOWUSD', label: 'FLOW' },
-    { value: 'ZECUSD', label: 'ZCASH' },
+    { value: 'XZECZUSD', label: 'ZCASH' },
     { value: 'GRTUSD', label: 'THE GRAPH' },
     { value: 'MKRUSD', label: 'MAKERDAO' },
     { value: 'CVXUSD', label: 'CONVEX' },
@@ -65,15 +67,8 @@ class Dashboard extends Component {
   componentDidMount() {
     axios.get('/api/rust-functions/account-balance').then(res => {
       const accBalance = res.data
-      console.log(accBalance)
       this.setState({ balance:  accBalance})
     }).catch(this.setState({ balance: 'API Error' }))
-
-    // axios.get('/api/rust-functions/ticker').then(res => {
-    //   const tickerData = res.data.DOTUSD.a[0]
-    //   console.log(tickerData)
-    //   this.setState({ currentValue: tickerData })
-    // }).catch(this.setState({ currentValue: "API Error" }))
   }
 
   displayAccountBalance = data => {
@@ -85,6 +80,19 @@ class Dashboard extends Component {
     str = str.replaceAll(':', ': ')
 
     return str
+  }
+
+  convertUSDtoCoin = (usd, value) => {
+    const res = usd / value
+    return res.toFixed(6)
+  }
+
+  convertCoinToUSD = (value, coin) => {
+    return value * coin
+  }
+
+  calculateChange = (current, old) => {
+    return current / old
   }
 
   onLogoutClick = e => {
@@ -105,7 +113,6 @@ class Dashboard extends Component {
 
     axios.get('/api/rust-functions/account-balance').then(res => {
       const accBalance = res.data
-      console.log(accBalance)
       this.setState({ balance:  accBalance})
     }).catch(this.setState({ balance: 'API Error' }));
 
@@ -116,7 +123,7 @@ class Dashboard extends Component {
     }).catch(this.setState({ currentValue: "--" }))
 
     this.changeView();
-
+    
     setInterval(() => {
       axios.get('/api/rust-functions/ticker').then(res => {
         const tickerData = res.data.SOLUSD.a[0]
@@ -124,6 +131,21 @@ class Dashboard extends Component {
         this.setState({ currentValue: tickerData })
       }).catch(this.setState({ currentValue: "--" }))
     }, 15000)
+
+      axios.get(tickerReq).then(res => {
+        const tickerData = res.data[this.state.coin].a[0]
+        this.setState({ newCoinValue: tickerData })
+        // console.log("Old Value: " + this.state.oldCoinValue)
+        // console.log("New Value: " + tickerData)
+      }).catch(this.setState({ newCoinValue: "API Error" }))
+    }, 15000)
+
+    const limitSellValue = this.convertUSDtoCoin(this.returnAmount(this.state.amount), this.state.oldCoinValue)
+    const buyReq = `/api/rust-functions/buy/:${this.state.amount}-:${this.state.coin}-:${limitSellValue}`
+    axios.get(buyReq).then(res => {
+      console.log(res.data)
+      this.setState({ bought: true })
+    }).catch(this.setState({ bought: false }))
 
     /** Crypto purchase action steps
      * Done - Replace input display with sell progress
@@ -143,13 +165,32 @@ class Dashboard extends Component {
     }
   }
 
+  buyNew = () => {
+    this.setState({
+      coin: 'select',
+      amount: null,
+      gain: 15,
+      bought: false,
+      oldCoinValue: null,
+      newCoinValue: null,
+      valueUSD: null
+    })
+  }
+
   abort = () => {
     this.setState({
       coin: 'select',
       amount: null,
       gain: 15,
-      bought: false
+      bought: false,
+      oldCoinValue: null,
+      newCoinValue: null,
+      valueUSD: null
     })
+
+    axios.get('/api/rust-functions/cancel-all-orders').then(res => {
+      console.log(res.data)
+    }).catch(console.error('Unable to cancel orders'))
   }
 
   returnAmount = amount => {
@@ -220,6 +261,8 @@ class Dashboard extends Component {
             <hr></hr>
             <p className="flow-text grey-text text-darken-1">
                 ${Number(this.state.amount).toFixed(2)}
+                <br />
+                {this.convertUSDtoCoin(Number(this.state.amount), Number(this.state.oldCoinValue))}
             </p>
           </div>
           <div className="landing-copy col s16 center-align">
@@ -233,7 +276,14 @@ class Dashboard extends Component {
             <h5>Current {this.state.coin} Value</h5>
             <hr></hr>
             <p className="flow-text grey-text text-darken-1">
-              {this.state.currentValue}
+              {this.state.newCoinValue}
+            </p>
+          </div>
+          <div className="landing-copy col s16 center-align">
+            <h5>Value in USD</h5>
+            <hr></hr>
+            <p className="flow-text grey-text text-darken-1">
+              ${Number(this.state.amount * this.calculateChange(this.state.newCoinValue, this.state.oldCoinValue)).toFixed(2)}
             </p>
           </div>
         </div>
@@ -245,10 +295,23 @@ class Dashboard extends Component {
               letterSpacing: "1.5px",
               marginTop: "1rem"
             }}
-            onClick={this.abort}
+            onClick={this.buyNew}
             className="btn btn-large waves-effect waves-light hoverable dark-green accent-3"
           >
             Buy New Coin
+          </button>
+          <button
+            style={{
+              width: "150px",
+              borderRadius: "3px",
+              letterSpacing: "1.5px",
+              marginTop: "1rem",
+              marginLeft: '50px'
+            }}
+            onClick={this.abort}
+            className="btn btn-large waves-effect waves-light hoverable red accent-3"
+          >
+            Abort
           </button>
         </div>
       </div>
@@ -289,7 +352,7 @@ class Dashboard extends Component {
                   marginTop: "1rem",
                   position: "absolute",
                   bottom: "20px",
-                  marginLeft: "-15px"
+                  marginLeft: "-14.5px"
                 }}
                 onClick={this.onLogoutClick}
                 className="btn btn-large btn-flat waves-effect white dark-green-text"

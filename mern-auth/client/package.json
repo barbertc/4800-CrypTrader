@@ -15,8 +15,7 @@
     "react-scripts": "^5.0.0",
     "react-select": "^5.2.2",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "ref-napi": "^3.0.3"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
