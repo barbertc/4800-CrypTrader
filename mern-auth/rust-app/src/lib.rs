@@ -335,7 +335,7 @@ pub extern "C" fn mk_sell(credens: *const c_char, voll: *const c_char, parr: *co
     
     //------------------------------------------------------------------------//
     let come_on = Command::MarketSell {volume: vol.clone(), pair: par.clone()};//
-    let config = KrakConfig{					      //
+    let mut config = KrakConfig{					      //
     	command: come_on,						      //  This creates an order to then pass to add_market_order
     	creds: creds.clone(),						      //
     	validate: false,						      //
@@ -415,7 +415,7 @@ pub extern "C" fn limit_buy(credens: *const c_char, voll: *const c_char, parr: *
     let mut oflags = BTreeSet::new();
     oflags.insert(OrderFlag::Post);
     let come_on = Command::LimitBuy {volume: vol.clone(), pair: par.clone(), price: pryce.clone()};//
-    let config = KrakConfig{					      //
+    let mut config = KrakConfig{					      //
     	command: come_on,						      //  This creates an order to then pass to add_market_order
     	creds: creds.clone(),						      //
     	validate: false,						      //
@@ -531,4 +531,9 @@ pub extern "C" fn limit_sell(credens: *const c_char, voll: *const c_char, parr: 
     let jso = json!(result).to_string();						   //	
     return CString::new(jso).unwrap();							   //
     //-------------------------------------------------------------------------------------//
+}
+
+#[no_mangle]
+pub extern "C" fn create_path() -> CString {
+    return CString::new("{status : \"success\"").unwrap();
 }

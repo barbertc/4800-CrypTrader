@@ -8,9 +8,26 @@ const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = keys.secretOrKey;
 
+
 module.exports = passport => {
+  passport.serializeUser((user, done) => {
+    done(null, user._id)
+    console.log('Testing searialize')
+  })
+  
+  passport.deserializeUser(async (id, done) => {
+    console.log('Testing deserialize')
+    try {
+      const user = await User.findById(id)
+      done(null, user)
+    } catch(err) {
+      done(err)
+    }
+  })
+  
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
+      console.log(jwt_payload)
       User.findById(jwt_payload.id)
         .then(user => {
           if (user) {

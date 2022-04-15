@@ -3,8 +3,12 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const ffi = require("ffi-napi");
+const session = require('express-session');
 
 const users = require("./routes/api/users");
+const MongoStore = require("connect-mongo");
+const keys = require("./config/keys");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -17,7 +21,7 @@ app.use(
 app.use(bodyParser.json());
 
 // DB Config
-const db = require("./config/keys").mongoURI;
+const db = keys.mongoURI;
 
 // Connect to MongoDB
 mongoose
@@ -29,6 +33,16 @@ mongoose
   .catch(err => console.log(err));
 
 // Passport middleware
+app.use(cookieParser())
+app.use(session({
+  secret: keys.secretOrKey,
+  resave: false,
+  saveUnitialized: false,
+  store: MongoStore.create({
+    mongoUrl: keys.mongoURI
+  })
+}))
+
 app.use(passport.initialize());
 
 // Passport config
@@ -38,13 +52,16 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 
 const rust = ffi.Library('./rust-app/target/release/librust_app', {
-  'test_fun': ['int', ['int', 'int']],
-  'test_fun_jr': ['string', ['int']],
+  'create_path': ['string', []],
   'account_balance': ['string', ['string']],
   'ticker': ['string', ['string']],
   'mk_buy': ['string', ['string', 'string', 'string']],
   'mk_sell': ['string', ['string', 'string', 'string']],
   'limit_sell': ['string', ['string', 'string', 'string', 'string']]
+})
+
+app.get('/api/user-data', (req, res) => {
+  console.log(req.user)
 })
 
 app.get('/api/rust-functions/account-balance', (req, res) => {
