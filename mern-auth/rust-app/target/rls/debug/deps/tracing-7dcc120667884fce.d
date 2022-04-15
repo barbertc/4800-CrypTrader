@@ -1,0 +1,13 @@
+/home/caleb/capstone/mern-auth/rust-app/target/rls/debug/deps/tracing-7dcc120667884fce.rmeta: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/macros.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/dispatcher.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/field.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/instrument.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/level_filters.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/span.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/stdlib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/subscriber.rs
+
+/home/caleb/capstone/mern-auth/rust-app/target/rls/debug/deps/tracing-7dcc120667884fce.d: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/macros.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/dispatcher.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/field.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/instrument.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/level_filters.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/span.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/stdlib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/subscriber.rs
+
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/lib.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/macros.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/dispatcher.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/field.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/instrument.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/level_filters.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/span.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/stdlib.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-0.1.32/src/subscriber.rs:

@@ -111,27 +111,28 @@ class Dashboard extends Component {
   onSubmit = e => {
     e.preventDefault();
 
+    const tickerReq = `/api/rust-functions/ticker/${this.state.coin}`
+    axios.get(tickerReq).then(res => {
+      const tickerData = res.data[this.state.coin].a[0]
+      this.setState({ oldCoinValue: tickerData })
+      this.setState({ newCoinValue: tickerData })
+    }).catch(this.setState({ newCoinValue: "API Error" }))
+
+    const limitSellValue = this.returnAmount(this.state.amount)
+    const buyReq = `/api/rust-functions/buy/${this.state.amount}-${this.state.coin}-${limitSellValue}`
+    axios.get(buyReq).then(res => {
+      console.log(res.data)
+      this.setState({ bought: true })
+    }).catch(this.setState({ bought: false }))
+
     axios.get('/api/rust-functions/account-balance').then(res => {
       const accBalance = res.data
       this.setState({ balance:  accBalance})
     }).catch(this.setState({ balance: 'API Error' }));
 
-    axios.get('/api/rust-functions/ticker').then(res => {
-      const tickerData = res.data.SOLUSD.a[0]
-      console.log(tickerData)
-      this.setState({ currentValue: tickerData })
-    }).catch(this.setState({ currentValue: "--" }))
-
     this.changeView();
     
     setInterval(() => {
-      axios.get('/api/rust-functions/ticker').then(res => {
-        const tickerData = res.data.SOLUSD.a[0]
-        console.log(tickerData)
-        this.setState({ currentValue: tickerData })
-      }).catch(this.setState({ currentValue: "--" }))
-    }, 15000)
-
       axios.get(tickerReq).then(res => {
         const tickerData = res.data[this.state.coin].a[0]
         this.setState({ newCoinValue: tickerData })
@@ -139,13 +140,6 @@ class Dashboard extends Component {
         // console.log("New Value: " + tickerData)
       }).catch(this.setState({ newCoinValue: "API Error" }))
     }, 15000)
-
-    const limitSellValue = this.convertUSDtoCoin(this.returnAmount(this.state.amount), this.state.oldCoinValue)
-    const buyReq = `/api/rust-functions/buy/:${this.state.amount}-:${this.state.coin}-:${limitSellValue}`
-    axios.get(buyReq).then(res => {
-      console.log(res.data)
-      this.setState({ bought: true })
-    }).catch(this.setState({ bought: false }))
 
     /** Crypto purchase action steps
      * Done - Replace input display with sell progress

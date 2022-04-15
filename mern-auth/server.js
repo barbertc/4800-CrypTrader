@@ -48,22 +48,17 @@ const rust = ffi.Library('./rust-app/target/release/librust_app', {
 })
 
 app.get('/api/rust-functions/account-balance', (req, res) => {
-  const accBalance = rust.account_balance('./creds-zaddydaddy.json')
+  const accBalance = rust.account_balance('./creds-caleb.json')
   res.send(JSON.parse(accBalance))
 })
 
-<<<<<<< HEAD
-app.get('/api/rust-functions/ticker', (req, res) => {
-  const ticky = rust.ticker('SOLUSD')
-  // console.log(ticky)
-=======
 app.get('/api/rust-functions/ticker/:coin', (req, res) => {
   const ticky = rust.ticker(req.params.coin)
->>>>>>> e7034905912b7b1f6b905ffecf728c81024b20cb
   res.send(JSON.parse(ticky))
 })
 
 app.get('/api/rust-functions/buy/:amount-:coin-:limitSell', (req, res) => {
+  console.log('Amount: ' + req.params.amount)
   const buy = rust.mk_buy('./creds-caleb.json', req.params.amount, req.params.coin)
   const sell = rust.limit_sell('./creds-caleb.json', req.params.limitSell, req.params.coin)
   console.log(buy)

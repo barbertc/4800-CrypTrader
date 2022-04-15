@@ -1,0 +1,13 @@
+/home/caleb/capstone/mern-auth/rust-app/target/rls/debug/deps/quote-8a1386f6aea1ec78.rmeta: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/ext.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/format.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/ident_fragment.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/to_tokens.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/runtime.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/spanned.rs
+
+/home/caleb/capstone/mern-auth/rust-app/target/rls/debug/deps/libquote-8a1386f6aea1ec78.rlib: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/ext.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/format.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/ident_fragment.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/to_tokens.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/runtime.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/spanned.rs
+
+/home/caleb/capstone/mern-auth/rust-app/target/rls/debug/deps/quote-8a1386f6aea1ec78.d: /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/lib.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/ext.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/format.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/ident_fragment.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/to_tokens.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/runtime.rs /home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/spanned.rs
+
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/lib.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/ext.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/format.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/ident_fragment.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/to_tokens.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/runtime.rs:
+/home/caleb/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.17/src/spanned.rs:
