@@ -415,7 +415,7 @@ pub extern "C" fn limit_buy(credens: *const c_char, voll: *const c_char, parr: *
     let mut oflags = BTreeSet::new();
     oflags.insert(OrderFlag::Post);
     let come_on = Command::LimitBuy {volume: vol.clone(), pair: par.clone(), price: pryce.clone()};//
-    let mut config = KrakConfig{					      //
+    let config = KrakConfig{					      //
     	command: come_on,						      //  This creates an order to then pass to add_market_order
     	creds: creds.clone(),						      //
     	validate: false,						      //

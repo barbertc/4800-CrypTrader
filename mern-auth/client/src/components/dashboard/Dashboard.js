@@ -65,6 +65,9 @@ class Dashboard extends Component {
   ]
 
   componentDidMount() {
+    const { user } = this.props.auth
+    console.log(user)
+
     axios.get('/api/rust-functions/account-balance').then(res => {
       const accBalance = res.data
       this.setState({ balance:  accBalance})
