@@ -17,7 +17,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import "./App.css";
 
 // Check for token to keep user logged in
-if (localStorage.jwtToken) {
+if (localStorage.getItem('jwtToken')) {
   // Set auth token header auth
   const token = localStorage.jwtToken;
   setAuthToken(token);
