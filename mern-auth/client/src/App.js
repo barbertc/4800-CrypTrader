@@ -20,7 +20,7 @@ import "./App.css";
 if (localStorage.getItem('jwtToken')) {
   console.log('Token found in local storage')
   // Set auth token header auth
-  const token = localStorage.jwtToken;
+  const token = localStorage.getItem('jwtToken');
   setAuthToken(token);
   // Decode token and get user info and exp
   const decoded = jwt_decode(token);
@@ -28,14 +28,14 @@ if (localStorage.getItem('jwtToken')) {
   store.dispatch(setCurrentUser(decoded));
   // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
-  if (decoded.exp < currentTime) {
-    // Logout user
-    console.log('Logging out...')
-    store.dispatch(logoutUser());
+  // if (decoded.exp < currentTime) {
+  //   // Logout user
+  //   console.log('Logging out...')
+  //   store.dispatch(logoutUser());
 
-    // Redirect to login
-    window.location.href = "./login";
-  }
+  //   // Redirect to login
+  //   window.location.href = "./login";
+  // }
 }
 
 class App extends Component {
