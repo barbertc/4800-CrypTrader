@@ -18,6 +18,7 @@ import "./App.css";
 
 // Check for token to keep user logged in
 if (localStorage.getItem('jwtToken')) {
+  console.log('Token found in local storage')
   // Set auth token header auth
   const token = localStorage.jwtToken;
   setAuthToken(token);
@@ -29,12 +30,14 @@ if (localStorage.getItem('jwtToken')) {
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {
     // Logout user
+    console.log('Logging out...')
     store.dispatch(logoutUser());
 
     // Redirect to login
     window.location.href = "./login";
   }
 }
+
 class App extends Component {
   render() {
     return (
