@@ -30,5 +30,8 @@
     "passport-local": "^1.0.0",
     "react-dropdown-select": "^4.8.4",
     "validator": "^10.9.0"
+  },
+  "devDependencies": {
+    "@types/jwt-decode": "^3.1.0"
   }
 }

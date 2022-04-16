@@ -5,6 +5,7 @@ const passport = require("passport");
 const ffi = require("ffi-napi");
 const session = require('express-session');
 
+require('./models/User.js')
 const users = require("./routes/api/users");
 const MongoStore = require("connect-mongo");
 const keys = require("./config/keys");
@@ -44,6 +45,7 @@ app.use(session({
 }))
 
 app.use(passport.initialize());
+app.use(passport.session())
 
 // Passport config
 require("./config/passport")(passport);
