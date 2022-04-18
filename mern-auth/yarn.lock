@@ -939,6 +939,11 @@
   "resolved" "https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz"
   "version" "0.5.2"
 
+"fs@^0.0.1-security":
+  "integrity" "sha1-invTcYa23d84E/I4WLV+yq9eQdQ="
+  "resolved" "https://registry.npmjs.org/fs/-/fs-0.0.1-security.tgz"
+  "version" "0.0.1-security"
+
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -2182,6 +2187,11 @@
     "escape-html" "~1.0.3"
     "parseurl" "~1.3.3"
     "send" "0.17.2"
+
+"sessionstorage-for-nodejs@^1.0.2":
+  "integrity" "sha512-9u8L2FcLqFaQIaRL0qYlfE7joA25gwpeYnfrQtyMH4qdyL/xwsr0Hs7JOvdAi6PjuWrBfogevaQyO031kxgrNw=="
+  "resolved" "https://registry.npmjs.org/sessionstorage-for-nodejs/-/sessionstorage-for-nodejs-1.0.2.tgz"
+  "version" "1.0.2"
 
 "set-blocking@^2.0.0":
   "integrity" "sha1-BF+XgtARrppoA93TgrJDkrPYkPc="

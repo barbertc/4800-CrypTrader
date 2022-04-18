@@ -21,6 +21,7 @@
     "express": "^4.16.4",
     "express-session": "^1.17.2",
     "ffi-napi": "^4.0.3",
+    "fs": "^0.0.1-security",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.11",
@@ -29,6 +30,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "react-dropdown-select": "^4.8.4",
+    "sessionstorage-for-nodejs": "^1.0.2",
     "validator": "^10.9.0"
   },
   "devDependencies": {

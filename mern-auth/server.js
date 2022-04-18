@@ -4,19 +4,18 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const ffi = require("ffi-napi");
 const session = require('express-session');
-
-require('./models/User.js')
-const users = require("./routes/api/users");
 const MongoStore = require("connect-mongo");
 const keys = require("./config/keys");
 const cookieParser = require("cookie-parser");
+
+const users = require("./routes/api/users");
 
 const app = express();
 
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
-    extended: false
+    extended: true
   })
 );
 app.use(bodyParser.json());
@@ -37,15 +36,20 @@ mongoose
 app.use(cookieParser())
 app.use(session({
   secret: keys.secretOrKey,
-  resave: false,
-  saveUnitialized: false,
+  resave: true,
+  saveUnitialized: true,
   store: MongoStore.create({
-    mongoUrl: keys.mongoURI
+    mongoUrl: keys.mongoURI,
+    collectionName: 'sessions'
   })
 }))
 
 app.use(passport.initialize());
 app.use(passport.session())
+
+app.get('/', (req, res) => {
+  res.send(JSON.stringify(req.session))
+})
 
 // Passport config
 require("./config/passport")(passport);
@@ -54,7 +58,6 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 
 const rust = ffi.Library('./rust-app/target/release/librust_app', {
-  'create_path': ['string', []],
   'account_balance': ['string', ['string']],
   'ticker': ['string', ['string']],
   'mk_buy': ['string', ['string', 'string', 'string']],
@@ -62,13 +65,16 @@ const rust = ffi.Library('./rust-app/target/release/librust_app', {
   'limit_sell': ['string', ['string', 'string', 'string', 'string']]
 })
 
-app.get('/api/user-data', (req, res) => {
-  console.log(req.user)
-})
+// app.get('/api/user-data', (req, res) => {
+//   console.log(req.user)
+// })
 
 app.get('/api/rust-functions/account-balance', (req, res) => {
-  const accBalance = rust.account_balance('./creds-caleb.json')
+  const pathy = `./creds/${req.cookies._id}.json`
+  const accBalance = rust.account_balance(pathy)
   res.send(JSON.parse(accBalance))
+  // console.log('Cookie', req.cookies)
+  // console.log('Session from server.js', req.session.passport)
 })
 
 app.get('/api/rust-functions/ticker/:coin', (req, res) => {
@@ -77,16 +83,18 @@ app.get('/api/rust-functions/ticker/:coin', (req, res) => {
 })
 
 app.get('/api/rust-functions/buy/:amount-:coin-:limitSell', (req, res) => {
+  const pathy = `./creds/${req.cookies._id}.json`
   console.log('Amount: ' + req.params.amount)
-  const buy = rust.mk_buy('./creds-caleb.json', req.params.amount, req.params.coin)
-  const sell = rust.limit_sell('./creds-caleb.json', req.params.limitSell, req.params.coin)
+  const buy = rust.mk_buy(pathy, req.params.amount, req.params.coin)
+  const sell = rust.limit_sell(pathy, req.params.limitSell, req.params.coin)
   console.log(buy)
   console.log(sell)
   res.send(JSON.parse(buy))
 })
 
 app.get('/api/rust-functions/sell', (req, res) => {
-  const sell = rust.mk_sell('./creds-zaddydaddy.json', '0.001', 'ETHUSD')
+  const pathy = `./creds/${req.cookies._id}.json`
+  const sell = rust.mk_sell(pathy, '0.001', 'ETHUSD')
   console.log(sell)
   res.send(JSON.parse(sell))
 })
