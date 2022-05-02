@@ -118,28 +118,31 @@ class Dashboard extends Component {
       this.setState({ newCoinValue: tickerData })
     }).catch(this.setState({ newCoinValue: "API Error" }))
 
-    const limitSellValue = this.returnAmount(this.state.amount)
-    const buyReq = `/api/rust-functions/buy/${this.state.amount}-${this.state.coin}-${limitSellValue}`
-    axios.get(buyReq).then(res => {
-      console.log(res.data)
-      this.setState({ bought: true })
-    }).catch(this.setState({ bought: false }))
+    setTimeout(() => {
+      const limitSellValue = this.returnAmount(this.state.oldCoinValue)
+      const coinAmount = this.convertUSDtoCoin(this.state.amount, this.state.oldCoinValue)
+      const buyReq = `/api/rust-functions/buy/${coinAmount}-${this.state.coin}-${limitSellValue}`
+      axios.get(buyReq).then(res => {
+        console.log(res.data)
+        this.setState({ bought: true })
+      }).catch(this.setState({ bought: false }))
 
-    axios.get('/api/rust-functions/account-balance').then(res => {
-      const accBalance = res.data
-      this.setState({ balance:  accBalance})
-    }).catch(this.setState({ balance: 'API Error' }));
+      axios.get('/api/rust-functions/account-balance').then(res => {
+        const accBalance = res.data
+        this.setState({ balance:  accBalance})
+      }).catch(this.setState({ balance: 'API Error' }));
+    }, 1000)
 
     this.changeView();
     
-    setInterval(() => {
-      axios.get(tickerReq).then(res => {
-        const tickerData = res.data[this.state.coin].a[0]
-        this.setState({ newCoinValue: tickerData })
-        // console.log("Old Value: " + this.state.oldCoinValue)
-        // console.log("New Value: " + tickerData)
-      }).catch(this.setState({ newCoinValue: "API Error" }))
-    }, 15000)
+    if (this.state.bought) {
+      setInterval(() => {
+        axios.get(tickerReq).then(res => {
+          const tickerData = res.data[this.state.coin].a[0]
+          this.setState({ newCoinValue: tickerData })
+        }).catch(this.setState({ newCoinValue: "API Error" }))
+      }, 15000)
+    }
 
     /** Crypto purchase action steps
      * Done - Replace input display with sell progress

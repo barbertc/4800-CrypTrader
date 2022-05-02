@@ -73,8 +73,6 @@ app.get('/api/rust-functions/account-balance', (req, res) => {
   const pathy = `./creds/${req.cookies._id}.json`
   const accBalance = rust.account_balance(pathy)
   res.send(JSON.parse(accBalance))
-  // console.log('Cookie', req.cookies)
-  // console.log('Session from server.js', req.session.passport)
 })
 
 app.get('/api/rust-functions/ticker/:coin', (req, res) => {
@@ -86,7 +84,7 @@ app.get('/api/rust-functions/buy/:amount-:coin-:limitSell', (req, res) => {
   const pathy = `./creds/${req.cookies._id}.json`
   console.log('Amount: ' + req.params.amount)
   const buy = rust.mk_buy(pathy, req.params.amount, req.params.coin)
-  const sell = rust.limit_sell(pathy, req.params.limitSell, req.params.coin)
+  const sell = rust.limit_sell(pathy, req.params.amount, req.params.coin, req.params.limitSell)
   console.log(buy)
   console.log(sell)
   res.send(JSON.parse(buy))
